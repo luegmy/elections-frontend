@@ -1,0 +1,159 @@
+<div class="detalle-container">
+  <div class="top-header">
+    <button (click)="goBack()" class="back-button">← Volver a la lista</button>
+    
+    <div class="identity-header" *ngIf="candidate">
+      <h1 class="candidate-name">{{ candidate.name }}</h1>
+      <div class="party-badge large">{{ candidate.party }}</div>
+    </div>
+  </div>
+  
+  <div *ngIf="candidate" class="candidate-detail">
+    <div class="scores-row" id="scores">
+      <div class="score-item judicial" (click)="scrollToSection('historial')">
+        <div class="score-category">Judicial</div>
+        <div class="score-number">{{ candidate.scores.judicialScore }}</div>
+        <div class="score-hint">↗ Ver historial</div>
+      </div>
+      <div class="score-item contributions" (click)="scrollToSection('logros')">
+        <div class="score-category">Contribuciones</div>
+        <div class="score-number">{{ candidate.scores.contributionScore }}</div>
+        <div class="score-hint">↗ Ver logros</div>
+      </div>
+      <div class="score-item transparency" (click)="scrollToSection('transparencia')">
+        <div class="score-category">Transparencia</div>
+        <div class="score-number">{{ candidate.scores.transparencyScore }}</div>
+        <div class="score-hint">↗ Ver detalles</div>
+      </div>
+      <div class="score-item trust" (click)="scrollToSection('confianza')">
+        <div class="score-category">Confianza</div>
+        <div class="score-number">{{ candidate.scores.trustScore }}</div>
+        <div class="score-hint">↗ Ver detalles</div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="section-header">
+        <h2>Propuestas ({{ candidate.proposals.length }})</h2>
+      </div>
+      <div class="proposals-grid">
+        <div *ngFor="let proposal of candidate.proposals" class="proposal-card">
+          <div class="proposal-header">
+            <h4>{{ proposal.title }}</h4>
+            <span class="proposal-area">{{ proposal.area }}</span>
+          </div>
+          <p class="proposal-description">{{ proposal.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section" *ngIf="candidate.history && candidate.history.length > 0" id="historial">
+      <div class="section-header">
+        <h2>Historial Legal ({{ candidate.history.length }})</h2>
+        <button class="back-to-scores" (click)="scrollToSection('scores')">↑ Volver a scores</button>
+      </div>
+      <div class="history-list">
+        <div *ngFor="let entry of candidate.history" class="history-item" [class]="getSeverityClass(entry.severity)">
+          <div class="history-header">
+            <h4>{{ entry.title }}</h4>
+            <span class="severity">{{ entry.severity }}</span>
+          </div>
+          <p>{{ entry.description }}</p>
+          <div class="history-meta">
+            <span>Fecha: {{ entry.date }}</span>
+            <span>Estado: {{ entry.status }}</span>
+            <span>Fuente: {{ entry.source }}</span>
+            <span *ngIf="entry.verified" class="verified">✓ Verificado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section" *ngIf="candidate.achievements && candidate.achievements.length > 0" id="logros">
+      <div class="section-header">
+        <h2>Logros ({{ candidate.achievements.length }})</h2>
+        <button class="back-to-scores" (click)="scrollToSection('scores')">↑ Volver a scores</button>
+      </div>
+      <div class="achievements-list">
+        <div *ngFor="let achievement of candidate.achievements" class="achievement-item">
+          <div class="achievement-header">
+            <span class="relevance">Relevancia: {{ achievement.relevance }}/3</span>
+          </div>
+          <p>{{ achievement.description }}</p>
+          <div class="achievement-meta">
+            <span>Cantidad: {{ achievement.quantity }}</span>
+            <span>Factibilidad: {{ (achievement.feasibilityScore * 100) | number:'1.0-0' }}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-column-section">
+      <div class="detail-section" *ngIf="candidate.transparency" id="transparencia">
+        <div class="section-header">
+          <h2>Transparencia</h2>
+          <button class="back-to-scores" (click)="scrollToSection('scores')">↑ Volver a scores</button>
+        </div>
+        <div class="metrics-list">
+          <div class="metric" [class.positive]="candidate.transparency.submittedDeclaration">
+            <span>Declaración Jurada Presentada</span>
+            <span>{{ candidate.transparency.submittedDeclaration ? 'Sí' : 'No' }}</span>
+          </div>
+          <div class="metric">
+            <span>Inconsistencias en Declaración</span>
+            <span>{{ candidate.transparency.declarationInconsistencies }}</span>
+          </div>
+          <div class="metric">
+            <span>Cambios de Partido</span>
+            <span>{{ candidate.transparency.partySwitches }}</span>
+          </div>
+          <div class="metric" [class.positive]="candidate.transparency.wasPublicOfficer">
+            <span>Experiencia como Funcionario</span>
+            <span>{{ candidate.transparency.wasPublicOfficer ? 'Sí' : 'No' }}</span>
+          </div>
+          <div class="metric" [class.positive]="candidate.transparency.attendancePercentage >= 80">
+            <span>Asistencia a Sesiones</span>
+            <span>{{ candidate.transparency.attendancePercentage }}%</span>
+          </div>
+          <div class="metric" [class.positive]="candidate.transparency.publishedIncome">
+            <span>Declaró ingresos detallados</span>
+            <span>{{ candidate.transparency.publishedIncome ? 'Sí' : 'No' }}</span>
+          </div>
+          <div class="metric" [class.positive]="candidate.transparency.publishedExpenses">
+            <span>Detalle de gastos de campaña</span>
+            <span>{{ candidate.transparency.publishedExpenses ? 'Sí' : 'No' }}</span>
+          </div>
+          <div class="metric" [class.positive]="candidate.transparency.auditsAvailable">
+            <span>Informes de auditoría accesibles</span>
+            <span>{{ candidate.transparency.auditsAvailable ? 'Sí' : 'No' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section" *ngIf="candidate.trust" id="confianza">
+        <div class="section-header">
+          <h2>Confianza</h2>
+          <button class="back-to-scores" (click)="scrollToSection('scores')">↑ Volver a scores</button>
+        </div>
+        <div class="metrics-list">
+          <div class="metric" [class.negative]="candidate.trust.majorScandals > 0">
+            <span>Escándalos Graves</span>
+            <span>{{ candidate.trust.majorScandals }}</span>
+          </div>
+          <div class="metric" [class.negative]="candidate.trust.minorControversies > 0">
+            <span>Controversias Menores</span>
+            <span>{{ candidate.trust.minorControversies }}</span>
+          </div>
+          <div class="metric" [class.negative]="candidate.trust.factCheckFailures > 0">
+            <span>Fallos en Fact-Checking</span>
+            <span>{{ candidate.trust.factCheckFailures }}</span>
+          </div>
+          <div class="metric" [class.negative]="candidate.trust.ethicsSanction">
+            <span>Sanciones Éticas</span>
+            <span>{{ candidate.trust.ethicsSanction ? 'Sí' : 'No' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

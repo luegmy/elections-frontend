@@ -1,0 +1,185 @@
+/* lista-container.component.css */
+.lista-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.candidates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.candidate-card {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Línea superior patriótica con el Rojo de Perú */
+.candidate-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #B71C1C, #ffffff, #B71C1C);
+  background-size: 300% 100%;
+  /* Animación se mantiene */
+  animation: patriotic-line 3s ease infinite;
+}
+
+.candidate-card:hover {
+  /* Borde de hover usa el Rojo de Perú (identidad principal) */
+  border-color: #B71C1C; 
+  background: #252525;
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* ... (Efectos de brillo y active son correctos) ... */
+
+/* Nombre arriba */
+.candidate-name {
+  margin: 0 0 1rem 0;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  /* Degradado con el Azul de Contraste para profesionalismo */
+  background: linear-gradient(45deg, #fff, #42A5F5); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+.candidate-name::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 2px;
+  /* Subrayado con el Azul Institucional */
+  background: linear-gradient(90deg, #1E3A8A, #42A5F5); 
+  border-radius: 1px;
+}
+
+/* Partido debajo del nombre */
+.party-section {
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.party-badge {
+  /* Badge con el Azul Institucional */
+  background: linear-gradient(135deg, #1E3A8A, #1546B4); 
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-block;
+  border: 1px solid #42A5F5;
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ... (Efectos de brillo son correctos) ... */
+
+/* Propuestas debajo del partido */
+.candidate-proposals {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+}
+
+.proposal-title {
+  font-size: 0.9rem;
+  color: #bbb;
+  line-height: 1.4;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.proposal-title::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  /* Bullet point con el Rojo de Perú */
+  color: #B71C1C; 
+  font-weight: bold;
+}
+
+/* ... (Otros estilos de propuesta son correctos) ... */
+
+.more-proposals {
+  font-size: 0.8rem;
+  /* Texto con el Azul de Contraste */
+  color: #42A5F5; 
+  font-style: italic;
+  margin-top: 0.5rem;
+  text-align: center;
+  padding: 0.5rem;
+  /* Fondo y borde con el Azul de Contraste */
+  background: rgba(66, 165, 245, 0.1); 
+  border-radius: 8px;
+  border: 1px solid rgba(66, 165, 245, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* ... (Media Queries son correctos) ... */
+@media (max-width: 480px) {
+  .candidate-card {
+    padding: 1rem;
+  }
+
+  .candidate-name {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .candidate-proposals {
+    gap: 0.6rem;
+  }
+
+  .proposal-title {
+    font-size: 0.8rem;
+    padding: 0.5rem 0;
+    padding-left: 0.8rem;
+  }
+
+  .no-candidates {
+    padding: 3rem 1rem;
+    font-size: 1rem;
+  }
+
+  .no-candidates::before {
+    font-size: 2.5rem;
+  }
+}

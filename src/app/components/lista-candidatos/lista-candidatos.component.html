@@ -1,0 +1,28 @@
+<div class="lista-container">
+  <div class="candidates-grid">
+    <div 
+      *ngFor="let candidate of candidates" 
+      class="candidate-card"
+      (click)="viewCandidateDetail(candidate)"
+    >
+      <h3 class="candidate-name">{{ candidate.name }}</h3>
+      
+      <div class="party-section">
+        <span class="party-badge">{{ candidate.party }}</span>
+      </div>
+      
+      <div class="candidate-proposals">
+        <div class="proposal-title" *ngFor="let proposal of candidate.proposals.slice(0, 2)">
+          {{ proposal.title }}
+        </div>
+        <div *ngIf="candidate.proposals.length > 2" class="more-proposals">
+          +{{ candidate.proposals.length - 2 }} más
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="candidates.length === 0" class="no-candidates">
+    No hay candidatos para mostrar
+  </div>
+</div>
