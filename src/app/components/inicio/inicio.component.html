@@ -1,56 +1,56 @@
 <div class="inicio-container">
-  <div *ngIf="!showDetail" class="search-section">
-    <div class="search-box">
-      <div class="search-input-group">
-        <textarea 
-          [(ngModel)]="searchQuery"
-          (keypress)="onKeyPress($event)"
-          placeholder="Educación, salud, economía, seguridad..."
-          [disabled]="loading"
-          rows="1"
-        ></textarea>
-        <button 
-          (click)="onSearch()" 
-          [disabled]="loading || !searchQuery"
-          [class.loading]="loading"
-        >
-          {{ loading ? '...' : 'Buscar' }}
-        </button>
-      </div>
+  <div *ngIf="!showDetail" class="search-section-full">
+    <div class="peru-frame">
+      <div class="watermark-pe">PE</div>
+      
+      <textarea 
+        [(ngModel)]="searchQuery"
+        (keydown)="onKeyPress($any($event))"
+        placeholder="Escribe o pega aquí el perfil (hasta 500 palabras)..."
+        [disabled]="loading"
+        class="full-textarea"
+      ></textarea>
+
+      <button 
+        class="btn-search-floating"
+        (click)="onSearch()" 
+        [disabled]="loading || !searchQuery.trim()"
+      >
+        <span *ngIf="!loading">ANALIZAR</span>
+        <span *ngIf="loading">...</span>
+      </button>
     </div>
   </div>
 
   <div class="content-area">
     <div *ngIf="!showDetail" class="list-view">
-      <div *ngIf="loading" class="loading-state">
-        <div class="spinner"></div>
-        <p>Buscando...</p>
+      <div *ngIf="loading" class="state-msg">
+        <div class="loader-peru"></div>
+        <p>Procesando datos...</p>
       </div>
 
-      <div *ngIf="error" class="error-state">
-        {{ error }}
+      <div *ngIf="error" class="state-msg error">
+        <p>⚠️ {{ error }}</p>
+        <button (click)="onSearch()" class="retry-link">Reintentar</button>
       </div>
 
       <app-lista-candidatos 
-        *ngIf="candidates.length > 0 && !loading && hasSearched"
-        [candidates]="candidates"
-        (candidateSelected)="onCandidateSelected($event)"
-      ></app-lista-candidatos>
+        *ngIf="searchResults.length > 0 && !loading"
+        [searchResults]="searchResults"
+        (candidateSelected)="onCandidateSelected($event)">
+      </app-lista-candidatos>
 
-      <div *ngIf="candidates.length === 0 && !loading && hasSearched" class="empty-state">
-        No hay resultados para "{{ searchQuery }}"
-      </div>
-
-      <div *ngIf="!hasSearched && !loading" class="welcome-state">
-        Escribe palabras clave y presiona Buscar para encontrar candidatos
+      <div *ngIf="searchResults.length === 0 && !loading && hasSearched" class="state-msg">
+        <p>No hay coincidencias para este perfil.</p>
+        <button (click)="clearSearch()" class="clear-link">Borrar todo</button>
       </div>
     </div>
 
     <div *ngIf="showDetail && selectedCandidate" class="detail-view">
       <app-detalle-candidato 
         [candidate]="selectedCandidate"
-        (backToList)="onBackToList()"
-      ></app-detalle-candidato>
+        (backToList)="onBackToList()">
+      </app-detalle-candidato>
     </div>
   </div>
 </div>

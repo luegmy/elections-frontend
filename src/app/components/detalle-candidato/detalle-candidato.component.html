@@ -1,158 +1,139 @@
-<div class="detalle-container">
-  <div class="top-header">
-    <button (click)="goBack()" class="back-button">← Volver a la lista</button>
-    
-    <div class="identity-header" *ngIf="candidate">
-      <h1 class="candidate-name">{{ candidate.name }}</h1>
-      <div class="party-badge large">{{ candidate.party }}</div>
+<div class="detalle-container" *ngIf="candidate">
+  <div class="top-header-ultra-compact">
+    <div class="header-left-side">
+      <button (click)="goBack()" class="btn-back-smart">← Volver</button>
+      <div class="candidate-main-info">
+        <h1 class="candidate-name">{{ candidate?.name }}</h1>
+        <p class="candidate-party-text">{{ candidate?.party }}</p>
+      </div>
+    </div>
+    <div class="level-pill" [class]="'level-' + candidate?.rankingLevel">
+      <span class="lvl-label">NIVEL</span>
+      <span class="lvl-num">{{ candidate?.rankingLevel }}</span>
     </div>
   </div>
-  
-  <div *ngIf="candidate" class="candidate-detail">
-    <div class="scores-row" id="scores">
-      <div class="score-item judicial" (click)="scrollToSection('historial')">
-        <div class="score-category">Judicial</div>
-        <div class="score-number">{{ candidate.scores.judicialScore }}</div>
-        <div class="score-hint">↗ Ver historial</div>
+
+  <div id="anchor-top" style="scroll-margin-top: 150px;"></div>
+
+  <div class="nav-scores-container">
+    <div class="scores-group side">
+      <div class="score-card-mini" (click)="scrollToSection('transparencia')">
+        <span class="s-label">INTEGRIDAD</span>
+        <span class="s-val">{{ candidate?.scores?.judicialScore | number:'1.0-1' }}</span>
       </div>
-      <div class="score-item contributions" (click)="scrollToSection('logros')">
-        <div class="score-category">Contribuciones</div>
-        <div class="score-number">{{ candidate.scores.contributionScore }}</div>
-        <div class="score-hint">↗ Ver logros</div>
-      </div>
-      <div class="score-item transparency" (click)="scrollToSection('transparencia')">
-        <div class="score-category">Transparencia</div>
-        <div class="score-number">{{ candidate.scores.transparencyScore }}</div>
-        <div class="score-hint">↗ Ver detalles</div>
-      </div>
-      <div class="score-item trust" (click)="scrollToSection('confianza')">
-        <div class="score-category">Confianza</div>
-        <div class="score-number">{{ candidate.scores.trustScore }}</div>
-        <div class="score-hint">↗ Ver detalles</div>
+      <div class="score-card-mini" (click)="scrollToSection('logros')">
+        <span class="s-label">APORTES</span>
+        <span class="s-val">{{ candidate?.scores?.contributionScore | number:'1.0-1' }}</span>
       </div>
     </div>
-
-    <div class="detail-section">
-      <div class="section-header">
-        <h2>Propuestas ({{ candidate.proposals.length }})</h2>
+    <div class="scores-group-center">
+      <div class="score-card-main highlight-judicial" (click)="scrollToSection('judicial')">
+        <span class="s-label">PLAN DE GOBIERNO</span>
+        <span class="s-val">{{ candidate?.scores?.planScore | number:'1.0-1' }}</span>
       </div>
-      <div class="proposals-grid">
-        <div *ngFor="let proposal of candidate.proposals" class="proposal-card">
-          <div class="proposal-header">
-            <h4>{{ proposal.title }}</h4>
-            <span class="proposal-area">{{ proposal.area }}</span>
-          </div>
-          <p class="proposal-description">{{ proposal.description }}</p>
-        </div>
+      <div class="score-card-main highlight-final">
+        <span class="s-label">GLOBAL</span>
+        <span class="s-val">{{ candidate?.scores?.finalScore | number:'1.0-1' }}</span>
       </div>
     </div>
-
-    <div class="detail-section" *ngIf="candidate.history && candidate.history.length > 0" id="historial">
-      <div class="section-header">
-        <h2>Historial Legal ({{ candidate.history.length }})</h2>
-        <button class="back-to-scores" (click)="scrollToSection('scores')">↑ Volver a scores</button>
+    <div class="scores-group side">
+      <div class="score-card-mini" (click)="scrollToSection('confianza')">
+        <span class="s-label">CONFIANZA</span>
+        <span class="s-val">{{ candidate?.scores?.trustScore | number:'1.0-1' }}</span>
       </div>
-      <div class="history-list">
-        <div *ngFor="let entry of candidate.history" class="history-item" [class]="getSeverityClass(entry.severity)">
-          <div class="history-header">
-            <h4>{{ entry.title }}</h4>
-            <span class="severity">{{ entry.severity }}</span>
-          </div>
-          <p>{{ entry.description }}</p>
-          <div class="history-meta">
-            <span>Fecha: {{ entry.date }}</span>
-            <span>Estado: {{ entry.status }}</span>
-            <span>Fuente: {{ entry.source }}</span>
-            <span *ngIf="entry.verified" class="verified">✓ Verificado</span>
-          </div>
-        </div>
+      <div class="score-card-mini" (click)="scrollToSection('propuestas')">
+        <span class="s-label">TRANSPARENCIA</span>
+        <span class="s-val">{{ candidate?.scores?.transparencyScore | number:'1.0-1' }}</span>
       </div>
     </div>
+  </div>
 
-    <div class="detail-section" *ngIf="candidate.achievements && candidate.achievements.length > 0" id="logros">
-      <div class="section-header">
-        <h2>Logros ({{ candidate.achievements.length }})</h2>
-        <button class="back-to-scores" (click)="scrollToSection('scores')">↑ Volver a scores</button>
-      </div>
-      <div class="achievements-list">
-        <div *ngFor="let achievement of candidate.achievements" class="achievement-item">
-          <div class="achievement-header">
-            <span class="relevance">Relevancia: {{ achievement.relevance }}/3</span>
+  <div class="content-body-spacer">
+    
+    <section class="section-box" id="propuestas">
+      <h2 class="section-title-return" (click)="scrollToSection('anchor-top')">PLAN DE GOBIERNO ▲</h2>
+      <div *ngFor="let p of candidate?.proposals; let i = index" class="proposal-card">
+        <div class="proposal-header" (click)="toggleItem(expandedProposals, i)">
+          <div class="header-left">
+            <span class="area-tag">{{ p.area }}</span>
+            <span class="proposal-title">{{ p.title }}</span>
           </div>
-          <p>{{ achievement.description }}</p>
-          <div class="achievement-meta">
-            <span>Cantidad: {{ achievement.quantity }}</span>
-            <span>Factibilidad: {{ (achievement.feasibilityScore * 100) | number:'1.0-0' }}%</span>
-          </div>
+          <span class="chevron">{{ expandedProposals.get(i) ? '−' : '+' }}</span>
         </div>
-      </div>
-    </div>
-
-    <div class="two-column-section">
-      <div class="detail-section" *ngIf="candidate.transparency" id="transparencia">
-        <div class="section-header">
-          <h2>Transparencia</h2>
-          <button class="back-to-scores" (click)="scrollToSection('scores')">↑ Volver a scores</button>
-        </div>
-        <div class="metrics-list">
-          <div class="metric" [class.positive]="candidate.transparency.submittedDeclaration">
-            <span>Declaración Jurada Presentada</span>
-            <span>{{ candidate.transparency.submittedDeclaration ? 'Sí' : 'No' }}</span>
-          </div>
-          <div class="metric">
-            <span>Inconsistencias en Declaración</span>
-            <span>{{ candidate.transparency.declarationInconsistencies }}</span>
-          </div>
-          <div class="metric">
-            <span>Cambios de Partido</span>
-            <span>{{ candidate.transparency.partySwitches }}</span>
-          </div>
-          <div class="metric" [class.positive]="candidate.transparency.wasPublicOfficer">
-            <span>Experiencia como Funcionario</span>
-            <span>{{ candidate.transparency.wasPublicOfficer ? 'Sí' : 'No' }}</span>
-          </div>
-          <div class="metric" [class.positive]="candidate.transparency.attendancePercentage >= 80">
-            <span>Asistencia a Sesiones</span>
-            <span>{{ candidate.transparency.attendancePercentage }}%</span>
-          </div>
-          <div class="metric" [class.positive]="candidate.transparency.publishedIncome">
-            <span>Declaró ingresos detallados</span>
-            <span>{{ candidate.transparency.publishedIncome ? 'Sí' : 'No' }}</span>
-          </div>
-          <div class="metric" [class.positive]="candidate.transparency.publishedExpenses">
-            <span>Detalle de gastos de campaña</span>
-            <span>{{ candidate.transparency.publishedExpenses ? 'Sí' : 'No' }}</span>
-          </div>
-          <div class="metric" [class.positive]="candidate.transparency.auditsAvailable">
-            <span>Informes de auditoría accesibles</span>
-            <span>{{ candidate.transparency.auditsAvailable ? 'Sí' : 'No' }}</span>
+        <div class="proposal-body" *ngIf="expandedProposals.get(i)">
+          <div class="source-info">FUENTE: {{ p.sourcePlan }}</div>
+          <p class="proposal-desc">{{ p.detailDescription }}</p>
+          <div class="proposal-two-columns">
+            <div class="p-col">
+              <div class="stat-item">
+                <span class="s-label">Viabilidad: {{ p.feasibilityScore * 100 }}%</span>
+                <div class="bar-container"><div class="bar-fill" [style.width.%]="p.feasibilityScore * 100"></div></div>
+              </div>
+              <div class="stat-item">
+                <span class="s-label">Impacto: {{ p.impactScore * 100 }}%</span>
+                <div class="bar-container"><div class="bar-fill impact" [style.width.%]="p.impactScore * 100"></div></div>
+              </div>
+            </div>
+            <div class="p-col">
+              <div class="tech-row"><span>Costo:</span> {{ p.costEstimate }}</div>
+              <div class="tech-row" [class.text-red]="p.requiresConstitutionalReform"><span>Reforma:</span> {{ p.requiresConstitutionalReform ? 'SÍ' : 'NO' }}</div>
+              <div class="tech-row" [class.text-red]="p.violatesInternationalTreaties"><span>Tratados:</span> {{ p.violatesInternationalTreaties ? 'VULNERA' : 'RESPETA' }}</div>
+            </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="detail-section" *ngIf="candidate.trust" id="confianza">
-        <div class="section-header">
-          <h2>Confianza</h2>
-          <button class="back-to-scores" (click)="scrollToSection('scores')">↑ Volver a scores</button>
-        </div>
-        <div class="metrics-list">
-          <div class="metric" [class.negative]="candidate.trust.majorScandals > 0">
-            <span>Escándalos Graves</span>
-            <span>{{ candidate.trust.majorScandals }}</span>
+    <section class="section-box" id="judicial">
+      <h2 class="section-title-return" (click)="scrollToSection('anchor-top')">HISTORIAL JUDICIAL ▲</h2>
+      <div *ngFor="let h of candidate?.history; let i = index" class="legal-card" [ngClass]="{'b-grave': h.severity === 'GRAVE', 'b-mod': h.severity === 'MODERADO'}">
+        <div class="legal-header" (click)="toggleItem(expandedHistory, i)">
+          <div class="header-left">
+            <span class="sev-dot" [ngClass]="{'bg-grave': h.severity === 'GRAVE', 'bg-mod': h.severity === 'MODERADO'}"></span>
+            <span class="legal-title">{{ h.title }}</span>
           </div>
-          <div class="metric" [class.negative]="candidate.trust.minorControversies > 0">
-            <span>Controversias Menores</span>
-            <span>{{ candidate.trust.minorControversies }}</span>
-          </div>
-          <div class="metric" [class.negative]="candidate.trust.factCheckFailures > 0">
-            <span>Fallos en Fact-Checking</span>
-            <span>{{ candidate.trust.factCheckFailures }}</span>
-          </div>
-          <div class="metric" [class.negative]="candidate.trust.ethicsSanction">
-            <span>Sanciones Éticas</span>
-            <span>{{ candidate.trust.ethicsSanction ? 'Sí' : 'No' }}</span>
+          <div class="header-right">
+            <span class="verified-pill" *ngIf="h.verified">VERIFICADO</span>
+            <span class="chevron">{{ expandedHistory.get(i) ? '−' : '+' }}</span>
           </div>
         </div>
+        <div class="legal-body" *ngIf="expandedHistory.get(i)">
+          <p class="legal-desc-mono">{{ h.description }}</p>
+          <div class="legal-data-grid">
+            <div class="data-item"><span class="d-label">Expediente</span><span class="d-val">{{ h.expedientNumber }}</span></div>
+            <div class="data-item"><span class="d-label">Estado</span><span class="d-val status-txt">{{ formatStatus(h.status) }}</span></div>
+            <div class="data-item"><span class="d-label">Fecha</span><span class="d-val">{{ h.date | date:'dd/MM/yyyy' }}</span></div>
+            <div class="data-item"><span class="d-label">Fuente</span><span class="d-val">{{ h.source }}</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-box" id="logros">
+      <h2 class="section-title-return" (click)="scrollToSection('anchor-top')">LOGROS Y APORTES ▲</h2>
+      <div class="achievements-container">
+        <div *ngFor="let a of candidate?.achievements" class="achievement-item">
+          <span class="dot-green"></span>
+          <p>{{ a.description }}</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="compact-dual-grid">
+      <div class="data-card" id="transparencia">
+        <div class="card-mini-header">TRANSPARENCIA</div>
+        <div class="row"><span>Hoja de Vida:</span> <span class="text-green">PRESENTADA</span></div>
+        <div class="row"><span>Inconsistencias:</span> <span [class.text-red]="candidate?.transparency?.declarationInconsistencies > 0">{{ candidate?.transparency?.declarationInconsistencies }}</span></div>
+        <div class="row"><span>Asistencia:</span> <span class="text-green">{{ candidate?.transparency?.attendancePercentage }}%</span></div>
+        <div class="row"><span>Ingresos:</span> <span class="text-green">SÍ</span></div>
+        <div class="row"><span>Auditorías:</span> <span class="text-green">DISPONIBLES</span></div>
+      </div>
+      <div class="data-card" id="confianza">
+        <div class="card-mini-header">CONFIANZA</div>
+        <div class="row"><span>Mayores:</span> <span class="text-red">{{ candidate?.trust?.majorSanctions }}</span></div>
+        <div class="row"><span>Cambios Partido:</span> <span class="text-orange">{{ candidate?.trust?.partySwitches }}</span></div>
+        <div class="row"><span>Fact-Check:</span> <span class="text-red">{{ candidate?.trust?.factCheckFailures }}</span></div>
+        <div class="row"><span>Sanción Ética:</span> <span class="text-green">NINGUNA</span></div>
       </div>
     </div>
   </div>

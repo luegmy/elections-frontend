@@ -1,28 +1,49 @@
 <div class="lista-container">
-  <div class="candidates-grid">
+  <div class="candidates-full-width-list">
     <div 
-      *ngFor="let candidate of candidates" 
-      class="candidate-card"
-      (click)="viewCandidateDetail(candidate)"
+      *ngFor="let result of searchResults" 
+      class="candidate-master-card"
+      [ngClass]="'border-lvl-' + result.rankingLevel"
     >
-      <h3 class="candidate-name">{{ candidate.name }}</h3>
-      
-      <div class="party-section">
-        <span class="party-badge">{{ candidate.party }}</span>
-      </div>
-      
-      <div class="candidate-proposals">
-        <div class="proposal-title" *ngFor="let proposal of candidate.proposals.slice(0, 2)">
-          {{ proposal.title }}
+      <div class="row-header-compact">
+        <div class="identity-line">
+          <span class="acronym-txt">{{ result.partyAcronym }}</span>
+          <span class="bar-sep">|</span>
+          <span class="name-txt">{{ result.name }}</span>
+          <span class="bar-sep">|</span>
+          <span class="party-txt">{{ result.party }}</span>
+          <span class="bar-sep">|</span>
+          <span class="pos-txt">{{ result.position }}</span>
         </div>
-        <div *ngIf="candidate.proposals.length > 2" class="more-proposals">
-          +{{ candidate.proposals.length - 2 }} más
+        <div class="level-badge" [ngClass]="'lvl-' + result.rankingLevel">
+          NIVEL {{ result.rankingLevel }}
+        </div>
+      </div>
+
+      <div class="row-body-content">
+        <span class="title-accent">{{ result.matchTitle }}</span>
+        <span class="desc-txt">{{ result.matchDescription }}</span>
+        <div class="detail-nested" *ngIf="result.matchDetailDescription">
+          {{ result.matchDetailDescription }}
+        </div>
+      </div>
+
+      <div class="row-footer-actions">
+        <div class="meta-info">
+          <span class="tag-type" [ngClass]="'tag-' + result.matchType">
+            {{ result.matchType }}
+          </span>
+          <span class="src-txt" *ngIf="result.sourcePlan">{{ result.sourcePlan }}</span>
+        </div>
+
+        <div class="action-block">
+          <div class="score-display">
+            <span class="score-num">{{ result.finalScore | number:'1.0-0' }}%</span>
+            <span class="score-lab">MATCH</span>
+          </div>
+          <button class="btn-action" (click)="viewCandidateDetail(result)">VER MÁS</button>
         </div>
       </div>
     </div>
-  </div>
-
-  <div *ngIf="candidates.length === 0" class="no-candidates">
-    No hay candidatos para mostrar
   </div>
 </div>
