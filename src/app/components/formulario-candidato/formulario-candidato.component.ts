@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CandidateService } from '../../services/candidate.service';
-import { Candidate, Proposal } from '../../models/candidate.model';
+import { Candidate, Proposal, AchievementType } from '../../models/candidate.model';
 
 @Component({
   selector: 'app-formulario-candidato',
@@ -14,27 +14,29 @@ import { Candidate, Proposal } from '../../models/candidate.model';
 })
 export class FormularioCandidatoComponent {
   candidate: Partial<Candidate> = {
+    code: '',
     name: '',
+    position: '',
     party: '',
+    partyAcronym: '',
     biography: '',
     proposals: [],
     achievements: [],
+    history: [],
     transparency: {
       submittedDeclaration: false,
       declarationInconsistencies: 0,
-      partySwitches: 0,
       wasPublicOfficer: false,
-      attendancePercentage: 0,
       publishedIncome: false,
       publishedExpenses: false,
       auditsAvailable: false
     },
     trust: {
-      majorScandals: 0,
-      minorControversies: 0,
+      majorSanctions: 0,
+      minorSanctions: 0,
+      partySwitches: 0,
       factCheckFailures: 0,
-      ethicsSanction: false,
-      positiveEndorsements: 0
+      ethicsSanction: false
     },
     scores: {
       judicialScore: 0,
@@ -44,11 +46,29 @@ export class FormularioCandidatoComponent {
       finalScore: 0
     },
     rankingLevel: 0,
-    planKeywords: []
+    lastAuditDate: '',
+    dataSourceVersion: ''
   };
 
-  newProposal: Proposal = { id: '', title: '', description: '', area: '' };
-  newAchievement: any = { description: '', type: '', relevance: 1, quantity: 0, tags: [], feasibilityScore: 0 };
+  newProposal: any = { 
+    id: '', 
+    title: '', 
+    description: '', 
+    area: '', 
+    detailDescription: '', 
+    sourcePlan: '',
+    feasibilityScore: 0.5,
+    impactScore: 0.5,
+    costEstimate: '' 
+  };
+  
+  newAchievement: any = { 
+    description: '', 
+    type: '', 
+    relevance: 1, 
+    quantity: 0, 
+    tags: [] 
+  };
 
   constructor(
     private router: Router,
@@ -59,7 +79,17 @@ export class FormularioCandidatoComponent {
     if (this.newProposal.title && this.newProposal.description) {
       this.newProposal.id = Date.now().toString();
       this.candidate.proposals!.push({...this.newProposal});
-      this.newProposal = { id: '', title: '', description: '', area: '' };
+      this.newProposal = { 
+        id: '', 
+        title: '', 
+        description: '', 
+        area: '', 
+        detailDescription: '', 
+        sourcePlan: '',
+        feasibilityScore: 0.5,
+        impactScore: 0.5,
+        costEstimate: '' 
+      };
     }
   }
 
@@ -70,7 +100,7 @@ export class FormularioCandidatoComponent {
   addAchievement(): void {
     if (this.newAchievement.description && this.newAchievement.type) {
       this.candidate.achievements!.push({...this.newAchievement});
-      this.newAchievement = { description: '', type: '', relevance: 1, quantity: 0, tags: [], feasibilityScore: 0 };
+      this.newAchievement = { description: '', type: '', relevance: 1, quantity: 0, tags: [] };
     }
   }
 
@@ -80,20 +110,26 @@ export class FormularioCandidatoComponent {
 
   onSubmit(): void {
     if (this.candidate.name && this.candidate.party) {
+      // Generar código único si no existe
+      if (!this.candidate.code) {
+        this.candidate.code = 'CAND-' + Date.now().toString().slice(-6);
+      }
+      
       this.candidateService.createCandidate(this.candidate as Candidate).subscribe({
         next: (savedCandidate) => {
           alert('Candidato creado exitosamente');
-          this.router.navigate(['/candidatos']);
+          this.router.navigate(['/']);
         },
         error: (err) => {
           alert('Error al crear el candidato');
           console.error('Error:', err);
         }
       });
+    } else {
+      alert('Por favor complete los campos obligatorios: Nombre y Partido');
     }
   }
 
-  // Método para cancelar y navegar al inicio
   onCancel(): void {
     this.router.navigate(['/']);
   }

@@ -1,23 +1,14 @@
 <div class="app-container">
   <nav class="navbar">
-    <!-- El nav-content es el contenedor principal. [class.open] maneja el menú en móvil. -->
-    <div class="nav-content" [class.open]="isMenuOpen"> 
+    <div class="nav-content" [class.open]="isMenuOpen">
       <div class="nav-brand">
-        <span class="angular-icon">🗳️</span> 
+        <span class="brand-icon">🗳️</span>
         <h2>Sistema Electoral</h2>
       </div>
-      
-      <!-- Botón de menú hamburguesa (visible solo en móvil por CSS) -->
-      <button class="menu-toggle" (click)="isMenuOpen = !isMenuOpen">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
-      
-      <!-- Los nav-links se muestran horizontalmente en escritorio y verticalmente/colapsados en móvil. -->
+
       <div class="nav-links">
-        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <span class="nav-icon">Inicio</span>
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="isMenuOpen = false" class="btn-nav-inicio">
+          Inicio
         </a>
       </div>
     </div>
@@ -26,25 +17,43 @@
   <main class="main-content">
     <router-outlet></router-outlet>
   </main>
-  
+
   <footer class="app-footer">
-    <div class="footer-content">
-      <div class="footer-section">
-        <div class="footer-logo">
-          <span class="angular-icon footer-icon">🗳️</span>
-          <h3>Sistema Electoral</h3>
+    <div class="footer-main-row">
+      
+      <div class="footer-description">
+        <div class="footer-title">
+          <span class="icon">🔍</span>
+          <h3>FILTRO ELECTORAL</h3>
         </div>
-        <p>Plataforma oficial para la consulta de información de candidatos y resultados electorales. Promoviendo la transparencia y la participación ciudadana.</p>
+        <p class="simple-text">
+          Revisamos el pasado de cada candidato para que sepas quién es quién. 
+          <b>No creas en simples promesas, conoce la verdad aquí.</b>
+        </p>
       </div>
-      <div class="footer-section">
-        <div class="footer-links">
-          <a routerLink="/">Transparencia</a>
-          <a routerLink="/">Términos y Condiciones</a>
-          <a routerLink="/">Política de Privacidad</a>
-          <a routerLink="/">Contacto Oficial</a>
+
+      <div class="footer-ranking-grid">
+        <div class="rank-item c-verde">
+          <span class="num">1</span> 
+          <span class="desc">Limpio / Impecable</span>
+        </div>
+        <div class="rank-item c-amarillo">
+          <span class="num">2</span> 
+          <span class="desc">Recomendable</span>
+        </div>
+        <div class="rank-item c-naranja">
+          <span class="num">3</span> 
+          <span class="desc">Con Observaciones</span>
+        </div>
+        <div class="rank-item c-rojo">
+          <span class="num">4</span> 
+          <span class="desc">¡Peligro! (Riesgo)</span>
         </div>
       </div>
     </div>
-    <p class="footer-credits">Desarrollado con Angular | Perú - Año Electoral.</p>
+
+    <div class="footer-bottom-credits">
+      <p>Desarrollado por : <i>Calibrando Sistemas</i> | Perú - Año Electoral 2026</p>
+    </div>
   </footer>
 </div>

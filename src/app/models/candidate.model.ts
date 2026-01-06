@@ -26,48 +26,70 @@ export enum LegalStatus {
 export interface Achievement {
   description: string;
   type: AchievementType;
-  relevance: number;
-  quantity: number;
+  relevance: number;   // 1=Bajo, 2=Medio, 3=Alto
+  quantity: number;    // Años, proyectos, etc.
   tags: string[];
-  feasibilityScore: number;
 }
 
 export interface Proposal {
   id: string;
   title: string;
   description: string;
-  area: string;
+  detailDescription: string;
+  area: string;             // Salud, Educación, etc.
+  sourcePlan: string;       // Sección del plan
+  planKeywords: string[];
+
+  feasibilityScore: number; // 0.0 - 1.0
+  impactScore: number;      // 0.0 - 1.0
+  costEstimate: string;
+  requiresConstitutionalReform: boolean;
+  violatesInternationalTreaties: boolean;
 }
+
 
 export interface LegalHistoryEntry {
   id: string;
-  date: string;
+  date: string;              // ISO date (yyyy-MM-dd)
   title: string;
   description: string;
-  source: string;
+  expedientNumber: string;
+  source: string;            // URL o entidad
   verified: boolean;
   status: LegalStatus;
   severity: IncidentSeverity;
 }
 
 export interface Transparency {
+  // Contraloría
   submittedDeclaration: boolean;
   declarationInconsistencies: number;
-  partySwitches: number;
+
+  // Portal de Transparencia
   wasPublicOfficer: boolean;
-  attendancePercentage: number;
+  attendancePercentage?: number; // Solo si fue funcionario
+
+  // ONPE – campañas
   publishedIncome: boolean;
   publishedExpenses: boolean;
   auditsAvailable: boolean;
 }
 
 export interface Trust {
-  majorScandals: number;
-  minorControversies: number;
+  // Ministerio Público / Ética
+  majorSanctions: number;
+  minorSanctions: number;
+
+  // ROP
+  partySwitches: number;
+
+  // Fact-checking
   factCheckFailures: number;
+
+  // Registro de sanciones
   ethicsSanction: boolean;
-  positiveEndorsements: number;
 }
+
 
 export interface CompositeScore {
   judicialScore: number;
@@ -78,26 +100,39 @@ export interface CompositeScore {
 }
 
 export interface Candidate {
-  code: number;
+  code: string;
   name: string;
+  position: string;        // Cargo al que postula
   party: string;
+  partyAcronym: string;
   biography: string;
-  proposals: Proposal[];
+
   history: LegalHistoryEntry[];
   achievements: Achievement[];
+
   transparency: Transparency;
   trust: Trust;
+
   scores: CompositeScore;
   rankingLevel: number;
-  planKeywords: string[];
-}
 
-export interface MatchRequest {
-  question: string;
-}
+  proposals: Proposal[];
 
-export interface MatchResult {
-  candidate: Candidate;
-  score: number;
-  matchingProposals: string[];
+  lastAuditDate: string;    // ISO string (LocalDateTime)
+  dataSourceVersion: string;
+}
+export interface MatchResponse {
+  code: string;
+  name: string;
+  party: string;
+  partyAcronym: string;
+  position: string;
+  matchType: string; 
+  // Nuevos campos para el mapeo dinámico
+  matchTitle: string;       // El título de la propuesta o nombre del caso
+  matchDescription: string;
+  matchDetailDescription: string; // La descripción del match
+  sourcePlan?: string;      // Sección del plan o número de expediente
+  finalScore: number;
+  rankingLevel: number;
 }

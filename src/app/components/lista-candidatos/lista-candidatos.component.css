@@ -1,185 +1,174 @@
-/* lista-container.component.css */
+:host {
+  /* Variables basadas en tu componente de detalle para que todo combine */
+  --bg-dark: #0f172a;
+  --bg-card: #1e293b;
+  --accent: #38bdf8;
+  --red: #ef4444;
+  --orange: #f59e0b;
+  --green: #4ade80;
+  --font-tech: 'Monaco', 'Consolas', monospace;
+}
+
+/* 1. CONTENEDOR PRINCIPAL: Centra la lista y limita el ancho en PC */
 .lista-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  background-color: var(--bg-dark);
   padding: 1rem;
+  display: flex;
+  justify-content: center;
 }
 
-.candidates-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-}
-
-.candidate-card {
-  background: #1e1e1e;
-  border: 1px solid #333;
-  border-radius: 16px;
-  padding: 1.5rem;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  height: fit-content;
+.candidates-full-width-list {
+  width: 100%;
+  max-width: 950px; /* EVITA QUE SE ABRA A TODA LA PANTALLA EN PC */
   display: flex;
   flex-direction: column;
-  position: relative;
-  overflow: hidden;
+  gap: 0.6rem;
 }
 
-/* Línea superior patriótica con el Rojo de Perú */
-.candidate-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #B71C1C, #ffffff, #B71C1C);
-  background-size: 300% 100%;
-  /* Animación se mantiene */
-  animation: patriotic-line 3s ease infinite;
-}
-
-.candidate-card:hover {
-  /* Borde de hover usa el Rojo de Perú (identidad principal) */
-  border-color: #B71C1C; 
-  background: #252525;
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-}
-
-/* ... (Efectos de brillo y active son correctos) ... */
-
-/* Nombre arriba */
-.candidate-name {
-  margin: 0 0 1rem 0;
-  color: #ffffff;
-  font-size: 1.3rem;
-  font-weight: 700;
-  line-height: 1.2;
-  text-align: center;
-  /* Degradado con el Azul de Contraste para profesionalismo */
-  background: linear-gradient(45deg, #fff, #42A5F5); 
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  padding: 0.5rem 0;
-  position: relative;
-}
-
-.candidate-name::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50px;
-  height: 2px;
-  /* Subrayado con el Azul Institucional */
-  background: linear-gradient(90deg, #1E3A8A, #42A5F5); 
-  border-radius: 1px;
-}
-
-/* Partido debajo del nombre */
-.party-section {
-  margin-bottom: 1.2rem;
-  text-align: center;
-}
-
-.party-badge {
-  /* Badge con el Azul Institucional */
-  background: linear-gradient(135deg, #1E3A8A, #1546B4); 
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  display: inline-block;
-  border: 1px solid #42A5F5;
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.4);
-  position: relative;
-  overflow: hidden;
-}
-
-/* ... (Efectos de brillo son correctos) ... */
-
-/* Propuestas debajo del partido */
-.candidate-proposals {
+/* 2. TARJETA BASE */
+.candidate-master-card {
+  background: var(--bg-card);
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
-  margin-top: auto;
-  padding-top: 1rem;
-  border-top: 1px solid #333;
+  border-left: 4px solid transparent;
+  transition: background 0.2s;
 }
 
-.proposal-title {
-  font-size: 0.9rem;
-  color: #bbb;
-  line-height: 1.4;
-  padding: 0.8rem 0;
-  border-bottom: 1px solid #333;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  transition: all 0.3s ease;
-  position: relative;
-  padding-left: 1rem;
+.candidate-master-card:hover { background: #243147; }
+
+/* 3. FILA 1: IDENTIDAD (ESCRITORIO) */
+.row-header-compact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.8rem;
+  background: rgba(0, 0, 0, 0.2);
 }
 
-.proposal-title::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  /* Bullet point con el Rojo de Perú */
-  color: #B71C1C; 
-  font-weight: bold;
+.identity-line { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.acronym-txt { color: #f8fafc; font-weight: 800; font-size: 0.7rem; }
+.name-txt { color: #fff; font-size: 0.9rem; font-weight: 700; }
+.party-txt { color: #94a3b8; font-size: 0.75rem; }
+.pos-txt { color: #64748b; font-size: 0.7rem; }
+.bar-sep { color: #334155; }
+
+.level-badge {
+  font-size: 0.6rem;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
 }
 
-/* ... (Otros estilos de propuesta son correctos) ... */
+/* 4. FILA 2: CONTENIDO (Estilo Mono del detalle) */
+.row-body-content {
+  padding: 0.6rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
 
-.more-proposals {
+.title-accent {
+  color: var(--accent);
   font-size: 0.8rem;
-  /* Texto con el Azul de Contraste */
-  color: #42A5F5; 
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.desc-txt {
+  color: #cbd5e1;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  font-family: var(--font-tech); /* Fuente técnica del detalle */
+}
+
+.detail-nested {
+  font-size: 0.75rem;
+  color: #64748b;
+  background: rgba(0,0,0,0.15);
+  padding: 0.4rem;
+  border-radius: 3px;
   font-style: italic;
-  margin-top: 0.5rem;
-  text-align: center;
-  padding: 0.5rem;
-  /* Fondo y borde con el Azul de Contraste */
-  background: rgba(66, 165, 245, 0.1); 
-  border-radius: 8px;
-  border: 1px solid rgba(66, 165, 245, 0.2);
-  transition: all 0.3s ease;
 }
 
-/* ... (Media Queries son correctos) ... */
-@media (max-width: 480px) {
-  .candidate-card {
-    padding: 1rem;
+/* 5. FILA 3: FOOTER ACCIONES */
+.row-footer-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border-top: 1px solid rgba(255,255,255,0.03);
+}
+
+.meta-info { display: flex; align-items: center; gap: 0.8rem; }
+.tag-type { font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 2px; }
+
+/* Colores de etiquetas según tipo */
+.tag-PLAN_GOBIERNO { background: #064e3b; color: #6ee7b7; }
+.tag-ANTECEDENTE { background: #450a0a; color: #fca5a5; }
+
+.src-txt { color: #475569; font-size: 0.6rem; font-family: var(--font-tech); }
+
+.action-block { display: flex; align-items: center; gap: 1.2rem; }
+.score-display { text-align: right; line-height: 0.9; }
+.score-num { color: var(--accent); font-weight: 800; font-size: 1.1rem; }
+.score-lab { font-size: 0.45rem; color: #475569; display: block; }
+
+.btn-action {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 4px 12px;
+  border-radius: 3px;
+  font-weight: 800;
+  font-size: 0.65rem;
+  cursor: pointer;
+}
+
+.btn-action:hover { background: var(--accent); color: #000; }
+
+/* --- RESPONSIVO PARA CELULARES --- */
+@media (max-width: 600px) {
+  .row-header-compact {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    position: relative;
   }
 
-  .candidate-name {
-    font-size: 1rem;
-    margin-bottom: 0.8rem;
+  .level-badge {
+    position: absolute;
+    right: 0.8rem;
+    top: 0.5rem;
   }
 
-  .candidate-proposals {
-    gap: 0.6rem;
+  .identity-line { padding-right: 60px; } /* Espacio para que el nombre no choque con el nivel */
+
+  .row-footer-actions {
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: flex-start;
   }
 
-  .proposal-title {
-    font-size: 0.8rem;
-    padding: 0.5rem 0;
-    padding-left: 0.8rem;
+  .meta-info {
+    width: 100%;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding-bottom: 0.5rem;
   }
 
-  .no-candidates {
-    padding: 3rem 1rem;
-    font-size: 1rem;
-  }
-
-  .no-candidates::before {
-    font-size: 2.5rem;
+  .action-block {
+    width: 100%;
+    justify-content: space-between; /* Puntaje a la izquierda, botón a la derecha */
   }
 }
+
+/* --- COLORES SEMÁFORO (BORDES Y NIVELES) --- */
+.lvl-1 { background: var(--green); color: #000; }
+.lvl-2 { background: var(--green); color: #000; }
+.lvl-3 { background: var(--orange); color: #000; }
+.lvl-4 { background: var(--red); color: #fff; }
+
+.border-lvl-1, .border-lvl-2 { border-left-color: var(--green); }
+.border-lvl-3 { border-left-color: var(--orange); }
+.border-lvl-4 { border-left-color: var(--red); }
