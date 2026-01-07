@@ -176,10 +176,34 @@
 .verified-pill { font-size: 0.5rem; color: var(--green); border: 1px solid var(--green); padding: 2px 5px; border-radius: 4px; font-weight: 900; }
 .sev-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
 
+/* --- SEVERIDADES DEL HISTORIAL JUDICIAL --- */
 .b-grave { border-left-color: var(--red); }
 .b-mod { border-left-color: var(--orange); }
+.b-neu { border-left-color: #64748b; } /* Gris azulado para procesos disueltos/neutros */
+.b-leve { border-left-color: var(--green); } /* Verde para casos leves o archivados */
+
 .bg-grave { background: var(--red); box-shadow: 0 0 5px var(--red); }
 .bg-mod { background: var(--orange); box-shadow: 0 0 5px var(--orange); }
+.bg-neu { background: #64748b; box-shadow: 0 0 5px #64748b; }
+.bg-leve { background: var(--green); box-shadow: 0 0 5px var(--green); }
+
+/* --- SCORE CARDS (ESCALA 0-100) --- */
+.card-success { 
+  border-color: var(--green) !important; 
+  background: rgba(74, 222, 128, 0.05) !important; 
+}
+.card-warning { 
+  border-color: var(--yellow) !important; 
+  background: rgba(234, 179, 8, 0.05) !important; 
+}
+.card-observe { 
+  border-color: var(--orange) !important; 
+  background: rgba(245, 158, 11, 0.05) !important; 
+}
+.card-danger { 
+  border-color: var(--red) !important; 
+  background: rgba(239, 68, 68, 0.05) !important; 
+}
 
 /* --- LOGROS --- */
 .achievements-container { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
@@ -206,3 +230,21 @@
 .bar-container { width: 100%; height: 5px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 4px; }
 .bar-fill { height: 100%; background: var(--accent); border-radius: 10px; }
 .bar-fill.impact { background: var(--green); }
+
+/* Colores dinámicos para los Score Cards */
+.card-success { 
+  border-color: var(--green) !important; 
+  background: rgba(74, 222, 128, 0.05) !important; 
+}
+.card-warning { 
+  border-color: var(--yellow) !important; 
+  background: rgba(234, 179, 8, 0.05) !important; 
+}
+.card-observe { 
+  border-color: var(--orange) !important; 
+  background: rgba(245, 158, 11, 0.05) !important; 
+}
+.card-danger { 
+  border-color: var(--red) !important; 
+  background: rgba(239, 68, 68, 0.05) !important; 
+}

@@ -33,6 +33,24 @@ export class DetalleCandidatoComponent {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  // Define el color del texto (número) según puntaje 0-20
+getScoreColor(score: number | undefined | null): string {
+  if (score === undefined || score === null) return '#94a3b8';
+  if (score >= 80) return '#4ade80'; // Verde
+  if (score >= 60) return '#eab308'; // Amarillo
+  if (score >= 40) return '#f59e0b'; // Naranja
+  return '#ef4444';                 // Rojo
+}
+
+// Define la clase para el borde y fondo del card
+getScoreClass(score: number | undefined | null): string {
+  if (score === undefined || score === null) return '';
+  if (score >= 80) return 'card-success';
+  if (score >= 60) return 'card-warning';
+  if (score >= 40) return 'card-observe';
+  return 'card-danger';
+}
+
   goBack() {
     this.backToList.emit();
   }

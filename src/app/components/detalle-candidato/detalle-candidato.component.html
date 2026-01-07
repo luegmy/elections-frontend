@@ -17,33 +17,47 @@
 
   <div class="nav-scores-container">
     <div class="scores-group side">
-      <div class="score-card-mini" (click)="scrollToSection('transparencia')">
+      <div class="score-card-mini" [ngClass]="getScoreClass(candidate?.scores?.judicialScore)" (click)="scrollToSection('transparencia')">
         <span class="s-label">INTEGRIDAD</span>
-        <span class="s-val">{{ candidate?.scores?.judicialScore | number:'1.0-1' }}</span>
+        <span class="s-val" [style.color]="getScoreColor(candidate?.scores?.judicialScore)">
+          {{ candidate?.scores?.judicialScore | number:'1.0-1' }}
+        </span>
       </div>
-      <div class="score-card-mini" (click)="scrollToSection('logros')">
+      <div class="score-card-mini" [ngClass]="getScoreClass(candidate?.scores?.contributionScore)" (click)="scrollToSection('logros')">
         <span class="s-label">APORTES</span>
-        <span class="s-val">{{ candidate?.scores?.contributionScore | number:'1.0-1' }}</span>
+        <span class="s-val" [style.color]="getScoreColor(candidate?.scores?.contributionScore)">
+          {{ candidate?.scores?.contributionScore | number:'1.0-1' }}
+        </span>
       </div>
     </div>
+
     <div class="scores-group-center">
-      <div class="score-card-main highlight-judicial" (click)="scrollToSection('judicial')">
+      <div class="score-card-main" [ngClass]="getScoreClass(candidate?.scores?.planScore)" (click)="scrollToSection('judicial')">
         <span class="s-label">PLAN DE GOBIERNO</span>
-        <span class="s-val">{{ candidate?.scores?.planScore | number:'1.0-1' }}</span>
+        <span class="s-val" [style.color]="getScoreColor(candidate?.scores?.planScore)">
+          {{ candidate?.scores?.planScore | number:'1.0-1' }}
+        </span>
       </div>
-      <div class="score-card-main highlight-final">
+      <div class="score-card-main" [ngClass]="getScoreClass(candidate?.scores?.finalScore)">
         <span class="s-label">GLOBAL</span>
-        <span class="s-val">{{ candidate?.scores?.finalScore | number:'1.0-1' }}</span>
+        <span class="s-val" [style.color]="getScoreColor(candidate?.scores?.finalScore)">
+          {{ candidate?.scores?.finalScore | number:'1.0-1' }}
+        </span>
       </div>
     </div>
+
     <div class="scores-group side">
-      <div class="score-card-mini" (click)="scrollToSection('confianza')">
+      <div class="score-card-mini" [ngClass]="getScoreClass(candidate?.scores?.trustScore)" (click)="scrollToSection('confianza')">
         <span class="s-label">CONFIANZA</span>
-        <span class="s-val">{{ candidate?.scores?.trustScore | number:'1.0-1' }}</span>
+        <span class="s-val" [style.color]="getScoreColor(candidate?.scores?.trustScore)">
+          {{ candidate?.scores?.trustScore | number:'1.0-1' }}
+        </span>
       </div>
-      <div class="score-card-mini" (click)="scrollToSection('propuestas')">
+      <div class="score-card-mini" [ngClass]="getScoreClass(candidate?.scores?.transparencyScore)" (click)="scrollToSection('propuestas')">
         <span class="s-label">TRANSPARENCIA</span>
-        <span class="s-val">{{ candidate?.scores?.transparencyScore | number:'1.0-1' }}</span>
+        <span class="s-val" [style.color]="getScoreColor(candidate?.scores?.transparencyScore)">
+          {{ candidate?.scores?.transparencyScore | number:'1.0-1' }}
+        </span>
       </div>
     </div>
   </div>
@@ -84,30 +98,34 @@
       </div>
     </section>
 
-    <section class="section-box" id="judicial">
-      <h2 class="section-title-return" (click)="scrollToSection('anchor-top')">HISTORIAL JUDICIAL ▲</h2>
-      <div *ngFor="let h of candidate?.history; let i = index" class="legal-card" [ngClass]="{'b-grave': h.severity === 'GRAVE', 'b-mod': h.severity === 'MODERADO'}">
-        <div class="legal-header" (click)="toggleItem(expandedHistory, i)">
-          <div class="header-left">
-            <span class="sev-dot" [ngClass]="{'bg-grave': h.severity === 'GRAVE', 'bg-mod': h.severity === 'MODERADO'}"></span>
-            <span class="legal-title">{{ h.title }}</span>
-          </div>
-          <div class="header-right">
-            <span class="verified-pill" *ngIf="h.verified">VERIFICADO</span>
-            <span class="chevron">{{ expandedHistory.get(i) ? '−' : '+' }}</span>
-          </div>
-        </div>
-        <div class="legal-body" *ngIf="expandedHistory.get(i)">
-          <p class="legal-desc-mono">{{ h.description }}</p>
-          <div class="legal-data-grid">
-            <div class="data-item"><span class="d-label">Expediente</span><span class="d-val">{{ h.expedientNumber }}</span></div>
-            <div class="data-item"><span class="d-label">Estado</span><span class="d-val status-txt">{{ formatStatus(h.status) }}</span></div>
-            <div class="data-item"><span class="d-label">Fecha</span><span class="d-val">{{ h.date | date:'dd/MM/yyyy' }}</span></div>
-            <div class="data-item"><span class="d-label">Fuente</span><span class="d-val">{{ h.source }}</span></div>
-          </div>
-        </div>
+<section class="section-box" id="judicial">
+  <h2 class="section-title-return" (click)="scrollToSection('anchor-top')">HISTORIAL JUDICIAL ▲</h2>
+  <div *ngFor="let h of candidate?.history; let i = index" 
+       class="legal-card" 
+       [ngClass]="{
+         'b-grave': h.severity === 'GRAVE', 
+         'b-mod': h.severity === 'MODERADO',
+         'b-leve': h.severity === 'LEVE',
+         'b-neu': h.severity === 'NEUTRO'
+       }">
+    <div class="legal-header" (click)="toggleItem(expandedHistory, i)">
+      <div class="header-left">
+        <span class="sev-dot" 
+              [ngClass]="{
+                'bg-grave': h.severity === 'GRAVE', 
+                'bg-mod': h.severity === 'MODERADO',
+                'bg-leve': h.severity === 'LEVE',
+                'bg-neu': h.severity === 'NEUTRO'
+              }"></span>
+        <span class="legal-title">{{ h.title }}</span>
       </div>
-    </section>
+      <div class="header-right">
+        <span class="verified-pill" *ngIf="h.verified">VERIFICADO</span>
+        <span class="chevron">{{ expandedHistory.get(i) ? '−' : '+' }}</span>
+      </div>
+    </div>
+    </div>
+</section>
 
     <section class="section-box" id="logros">
       <h2 class="section-title-return" (click)="scrollToSection('anchor-top')">LOGROS Y APORTES ▲</h2>

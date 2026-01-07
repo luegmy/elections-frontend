@@ -3,10 +3,11 @@
   --bg-dark: #0f172a;
   --bg-card: #1e293b;
   --accent: #38bdf8;
-  --red: #ef4444;
-  --orange: #f59e0b;
-  --green: #4ade80;
   --font-tech: 'Monaco', 'Consolas', monospace;
+  --yellow: #d29922; /* Nivel 2 */
+  --orange: #f0883e; /* Nivel 3 */
+  --red: #f85149;    /* Nivel 4 */
+  --green: #3fb950;  /* Nivel 1 */
 }
 
 /* 1. CONTENEDOR PRINCIPAL: Centra la lista y limita el ancho en PC */
@@ -164,11 +165,18 @@
 }
 
 /* --- COLORES SEMÁFORO (BORDES Y NIVELES) --- */
+/* Nivel 1: Verde (Impecable) */
 .lvl-1 { background: var(--green); color: #000; }
-.lvl-2 { background: var(--green); color: #000; }
-.lvl-3 { background: var(--orange); color: #000; }
-.lvl-4 { background: var(--red); color: #fff; }
+.border-lvl-1 { border-left-color: var(--green); }
 
-.border-lvl-1, .border-lvl-2 { border-left-color: var(--green); }
+/* Nivel 2: Amarillo (Recomendable) -> AQUÍ ESTABA EL CAMBIO */
+.lvl-2 { background: var(--yellow); color: #000; }
+.border-lvl-2 { border-left-color: var(--yellow); }
+
+/* Nivel 3: Naranja (Observaciones) */
+.lvl-3 { background: var(--orange); color: #000; }
 .border-lvl-3 { border-left-color: var(--orange); }
+
+/* Nivel 4: Rojo (Peligro) */
+.lvl-4 { background: var(--red); color: #fff; }
 .border-lvl-4 { border-left-color: var(--red); }
