@@ -1,139 +1,151 @@
-/* === 1. CONFIGURACIÓN BASE === */
 :host {
-  --peru-red: #b71c1c;
   --peru-blue: #1e3a8a;
-  --dark-bg: #0a0a0a;
-  --footer-bg: #0d1117;
+  --peru-red: #b71c1c;
+  --dark-bg: #0d1117;
 }
 
 .app-container {
-  background: var(--dark-bg);
+  background-color: var(--dark-bg);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', sans-serif;
+  color: #e6edf3;
 }
 
-/* === 2. NAVBAR (CABECERA FIJA) === */
+/* NAVBAR AZUL ORIGINAL */
 .navbar {
   background-color: var(--peru-blue);
-  height: 70px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  height: 60px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #333;
-}
-
-/* Bandera sutil debajo del azul */
-.navbar::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--peru-red) 33%, #fff 33%, #fff 66%, var(--peru-red) 66%);
+  border-bottom: 4px solid var(--peru-red);
+  /* --- AJUSTE DE SEGURIDAD --- */
+  position: relative; 
+  z-index: 1000; 
 }
 
 .nav-content {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  width: 100%;
-  padding: 0 1.5rem;
+  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.nav-brand { display: flex; align-items: center; gap: 12px; }
-.nav-brand h2 { color: #fff; margin: 0; font-size: 1.4rem; font-weight: 800; }
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .brand-icon { font-size: 1.5rem; }
+.brand-text { color: white; font-weight: 800; font-size: 1.2rem; letter-spacing: 0.5px; }
 
-/* BOTÓN INICIO ROJO (ESTILO ANALIZAR) */
-.btn-nav-inicio {
-  background: var(--peru-red) !important;
-  color: white !important;
+/* MODIFICACIÓN AQUÍ: Añadimos z-index al contenedor de links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 10001;
+}
+
+.btn-inicio {
+  background-color: var(--peru-red);
+  color: white;
   text-decoration: none;
-  font-weight: 800;
-  padding: 10px 25px !important;
-  border-radius: 8px;
-  text-transform: uppercase;
+  padding: 6px 18px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  /* --- AJUSTES DE SEGURIDAD PARA EL CLIC --- */
+  position: relative;
+  z-index: 10002; /* Aumentado para estar sobre todo */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  display: inline-block; 
+  border: none; /* Seguridad por si usas etiqueta button */
+}
+
+/* MARQUESINA VELOZ */
+.ticker-wrap {
+  background: #161b22;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 10px 0;
+  border-bottom: 1px solid #333;
+  /* --- AJUSTE PARA QUE NO SE TRASLAPE --- */
+  position: relative;
+  z-index: 10;
+}
+
+.ticker {
+  display: inline-flex;
+  animation: marquee-move 20s linear infinite;
+}
+
+.ticker-item {
+  color: #8b949e;
   font-size: 0.9rem;
-  box-shadow: 0 4px 15px rgba(183, 28, 28, 0.4);
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255,255,255,0.2);
+  padding-right: 50px;
 }
 
-.btn-nav-inicio:hover {
-  background: #e60000 !important;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(183, 28, 28, 0.6);
+.ticker-item b { color: #fff; }
+
+@keyframes marquee-move {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-/* === 3. CONTENIDO PRINCIPAL === */
+/* MAIN CONTENT */
 .main-content {
   flex: 1;
   width: 100%;
+  position: relative;
+  z-index: 1; /* Se mantiene por debajo de la navbar */
 }
 
-/* === 4. FOOTER CIUDADANO === */
+/* FOOTER RESPONSIVO */
 .app-footer {
-  background: var(--footer-bg);
-  border-top: 1px solid #30363d;
-  padding: 1.5rem 2rem 1rem;
+  background: #000;
+  padding: 20px 15px;
+  border-top: 1px solid #333;
 }
 
-.footer-main-row {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 3rem;
-}
-
-/* Texto Izquierdo Sencillo */
-.footer-title { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.footer-title h3 { color: #fff; margin: 0; font-size: 1.1rem; letter-spacing: 1px; }
-.simple-text { 
-  color: #8b949e; 
-  font-size: 0.95rem; 
-  margin: 0; 
-  max-width: 450px; 
-  line-height: 1.5;
-}
-.simple-text b { color: #c9d1d9; }
-
-/* Grid de Niveles 2x2 */
-.footer-ranking-grid {
+.footer-levels {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px 30px;
+  grid-template-columns: repeat(2, 1fr); /* 2x2 en móvil */
+  gap: 10px;
+  max-width: 600px;
+  margin: 0 auto 15px;
 }
 
-.rank-item { display: flex; align-items: center; gap: 10px; }
-.num { font-size: 1.5rem; font-weight: 900; }
-.desc { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
+.level-item {
+  font-size: 0.7rem;
+  font-weight: 700;
+}
 
-/* Colores Semáforo con Brillo */
-.c-verde .num, .c-verde .desc { color: #3fb950; text-shadow: 0 0 10px rgba(63, 185, 80, 0.4); }
-.c-amarillo .num, .c-amarillo .desc { color: #d29922; text-shadow: 0 0 10px rgba(210, 153, 34, 0.4); }
-.c-naranja .num, .c-naranja .desc { color: #f0883e; text-shadow: 0 0 10px rgba(240, 136, 62, 0.4); }
-.c-rojo .num, .c-rojo .desc { color: #f85149; text-shadow: 0 0 10px rgba(248, 81, 73, 0.4); }
-
-/* Créditos Finales */
-.footer-bottom-credits {
+.footer-credits {
   text-align: center;
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid #21262d;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #484f58;
+  border-top: 1px solid #222;
+  padding-top: 10px;
 }
 
-/* === 5. AJUSTES MÓVIL (RESPONSIVE) === */
-@media (max-width: 900px) {
-  .footer-main-row { flex-direction: column; text-align: center; gap: 1.5rem; }
-  .footer-ranking-grid { justify-items: center; }
-  .simple-text { max-width: 100%; }
+/* Colores Semáforo */
+.c-verde { color: #3fb950; }
+.c-amarillo { color: #d29922; }
+.c-naranja { color: #f0883e; }
+.c-rojo { color: #f85149; }
+
+/* Escritorio */
+@media (min-width: 768px) {
+  .footer-levels {
+    grid-template-columns: repeat(4, auto);
+    justify-content: center;
+    gap: 30px;
+  }
 }

@@ -1,59 +1,44 @@
 <div class="app-container">
   <nav class="navbar">
-    <div class="nav-content" [class.open]="isMenuOpen">
+    <div class="nav-content">
       <div class="nav-brand">
         <span class="brand-icon">🗳️</span>
-        <h2>Sistema Electoral</h2>
+        <span class="brand-text">SISTEMA ELECTORAL</span>
       </div>
-
       <div class="nav-links">
-        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="isMenuOpen = false" class="btn-nav-inicio">
-          Inicio
-        </a>
-      </div>
+  <button (click)="irAInicio()" class="btn-inicio">
+    Inicio
+  </button>
+</div>
     </div>
   </nav>
+
+  <div class="ticker-wrap" *ngIf="isInicio">
+    <div class="ticker">
+      <div class="ticker-item">
+        🔍 <b>FILTRO ELECTORAL:</b> Revisamos el pasado de cada candidato para que sepas quién es quién. <b>No creas en
+          simples promesas, conoce la verdad aquí.</b>
+      </div>
+      <div class="ticker-item">
+        🔍 <b>FILTRO ELECTORAL:</b> Revisamos el pasado de cada candidato para que sepas quién es quién. <b>No creas en
+          simples promesas, conoce la verdad aquí.</b>
+      </div>
+    </div>
+  </div>
 
   <main class="main-content">
     <router-outlet></router-outlet>
   </main>
 
   <footer class="app-footer">
-    <div class="footer-main-row">
-      
-      <div class="footer-description">
-        <div class="footer-title">
-          <span class="icon">🔍</span>
-          <h3>FILTRO ELECTORAL</h3>
-        </div>
-        <p class="simple-text">
-          Revisamos el pasado de cada candidato para que sepas quién es quién. 
-          <b>No creas en simples promesas, conoce la verdad aquí.</b>
-        </p>
-      </div>
-
-      <div class="footer-ranking-grid">
-        <div class="rank-item c-verde">
-          <span class="num">1</span> 
-          <span class="desc">Limpio / Impecable</span>
-        </div>
-        <div class="rank-item c-amarillo">
-          <span class="num">2</span> 
-          <span class="desc">Recomendable</span>
-        </div>
-        <div class="rank-item c-naranja">
-          <span class="num">3</span> 
-          <span class="desc">Con Observaciones</span>
-        </div>
-        <div class="rank-item c-rojo">
-          <span class="num">4</span> 
-          <span class="desc">¡Peligro! (Riesgo)</span>
-        </div>
-      </div>
+    <div class="footer-levels">
+      <div class="level-item c-verde">● NIVEL 1: LIMPIO</div>
+      <div class="level-item c-amarillo">● NIVEL 2: RECOMENDABLE</div>
+      <div class="level-item c-naranja">● NIVEL 3: OBSERVACIONES</div>
+      <div class="level-item c-rojo">● NIVEL 4: PELIGRO</div>
     </div>
-
-    <div class="footer-bottom-credits">
-      <p>Desarrollado por : <i>Calibrando Sistemas</i> | Perú - Año Electoral 2026</p>
+    <div class="footer-credits">
+      <p>Desarrollado por : <i>Calibrando Sistemas</i> | Perú - 2026</p>
     </div>
   </footer>
 </div>

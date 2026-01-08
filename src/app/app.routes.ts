@@ -5,24 +5,25 @@ import { DetalleCandidatoComponent } from './components/detalle-candidato/detall
 import { FormularioCandidatoComponent } from './components/formulario-candidato/formulario-candidato.component';
 
 export const routes: Routes = [
-  { 
-    path: '', 
-    component: InicioComponent 
+  {
+    path: '',
+    loadComponent: () => import('./components/inicio/inicio.component').then(m => m.InicioComponent)
   },
-  { 
-    path: 'candidatos', 
-    component: ListaCandidatosComponent 
+  {
+    path: 'candidatos',
+    loadComponent: () => import('./components/lista-candidatos/lista-candidatos.component').then(m => m.ListaCandidatosComponent)
   },
-  { 
-    path: 'candidato/:id', 
-    component: DetalleCandidatoComponent 
+  {
+    path: 'candidato/:id',
+    loadComponent: () => import('./components/detalle-candidato/detalle-candidato.component').then(m => m.DetalleCandidatoComponent)
   },
-  { 
-    path: 'nuevo-candidato', 
-    component: FormularioCandidatoComponent 
+  {
+    path: 'nuevo-candidato',
+    loadComponent: () => import('./components/formulario-candidato/formulario-candidato.component').then(m => m.FormularioCandidatoComponent)
   },
-  { 
-    path: '**', 
-    redirectTo: '' 
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
   }
 ];

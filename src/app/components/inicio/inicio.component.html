@@ -1,20 +1,21 @@
 <div class="inicio-container">
-  <div *ngIf="!showDetail" class="search-section-full">
+  <div *ngIf="!showDetail" class="search-wrap">
     <div class="peru-frame">
       <div class="watermark-pe">PE</div>
       
       <textarea 
         [(ngModel)]="searchQuery"
-        (keydown)="onKeyPress($any($event))"
-        placeholder="Escribe o pega aquí el perfil (hasta 500 palabras)..."
+        (keydown)="onKeyPress($event)"
+        placeholder="Ejemplos: lavados, derogacion, sentencias..."
         [disabled]="loading"
-        class="full-textarea"
+        class="compact-textarea"
+        rows="3"
       ></textarea>
 
       <button 
-        class="btn-search-floating"
+        class="btn-search-action"
         (click)="onSearch()" 
-        [disabled]="loading || !searchQuery.trim()"
+        [disabled]="!isQueryValid || loading"
       >
         <span *ngIf="!loading">ANALIZAR</span>
         <span *ngIf="loading">...</span>
@@ -24,9 +25,10 @@
 
   <div class="content-area">
     <div *ngIf="!showDetail" class="list-view">
+      
       <div *ngIf="loading" class="state-msg">
         <div class="loader-peru"></div>
-        <p>Procesando datos...</p>
+        <p>Procesando información electoral...</p>
       </div>
 
       <div *ngIf="error" class="state-msg error">
@@ -41,8 +43,8 @@
       </app-lista-candidatos>
 
       <div *ngIf="searchResults.length === 0 && !loading && hasSearched" class="state-msg">
-        <p>No hay coincidencias para este perfil.</p>
-        <button (click)="clearSearch()" class="clear-link">Borrar todo</button>
+        <p>No se encontraron candidatos con esos criterios.</p>
+        <button (click)="clearSearch()" class="clear-link">Nueva búsqueda</button>
       </div>
     </div>
 

@@ -24,8 +24,14 @@ export class InicioComponent {
 
   constructor(private candidateService: CandidateService) {}
 
+  // El botón se activa si hay más de 3 letras escritas
+  get isQueryValid(): boolean {
+    return this.searchQuery.trim().length > 3;
+  }
+
   onSearch(): void {
-    if (!this.searchQuery.trim() || this.loading) return;
+    if (!this.isQueryValid || this.loading) return;
+    
     this.loading = true;
     this.error = '';
     this.hasSearched = true;
@@ -35,6 +41,8 @@ export class InicioComponent {
       next: (res) => {
         this.searchResults = res;
         this.loading = false;
+        // Limpiamos el texto y el botón se bloquea automáticamente
+        this.searchQuery = ''; 
       },
       error: () => {
         this.error = 'Hubo un problema al procesar la búsqueda.';
@@ -44,7 +52,7 @@ export class InicioComponent {
   }
 
   onKeyPress(event: KeyboardEvent): void {
-    if (event.key === 'Enter' && !event.shiftKey) {
+    if (event.key === 'Enter' && !event.shiftKey && this.isQueryValid) {
       event.preventDefault();
       this.onSearch();
     }
@@ -54,6 +62,7 @@ export class InicioComponent {
     this.searchQuery = '';
     this.searchResults = [];
     this.hasSearched = false;
+    this.error = '';
   }
 
   onCandidateSelected(match: MatchResponse): void {
@@ -64,6 +73,10 @@ export class InicioComponent {
         this.showDetail = true;
         this.loading = false;
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+      error: () => {
+        this.error = 'No se pudo cargar el detalle.';
+        this.loading = false;
       }
     });
   }

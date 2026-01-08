@@ -12,10 +12,18 @@ import { throwError } from 'rxjs';
 export class CandidateService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
+
+  private handleError(error: any) {
+    console.error('Error en el servicio de candidatos:', error);
+    return throwError(() => new Error('Ocurrió un error en el sistema electoral. Intente más tarde.'));
+  }
 
   getAllCandidates(): Observable<Candidate[]> {
-    return this.http.get<Candidate[]>(this.apiUrl);
+    return this.http.get<Candidate[]>(this.apiUrl).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
   }
 
   getCandidateById(id: string): Observable<Candidate> {
@@ -31,14 +39,12 @@ export class CandidateService {
   }
 
   searchCandidates(query: string): Observable<MatchResponse[]> {
-  return this.http.get<MatchResponse[]>(`${this.apiUrl}/match`, {
-    params: { query }
-  }).pipe(
-    retry(1), // Reintenta una vez si falla por red
-    catchError(error => {
-      console.error('Error en la búsqueda:', error);
-      return throwError(() => new Error('No se pudo conectar con el servidor de elecciones.'));
-    })
-  );
+    if (!query.trim()) return new Observable(observer => observer.next([]));
+
+    return this.http.get<MatchResponse[]>(`${this.apiUrl}/match`, {
+      params: { query }
+    }).pipe(
+      catchError(this.handleError)
+    );
   }
 }

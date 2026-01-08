@@ -1,16 +1,17 @@
 :host {
-  /* Variables basadas en tu componente de detalle para que todo combine */
-  --bg-dark: #0f172a;
-  --bg-card: #1e293b;
-  --accent: #38bdf8;
-  --font-tech: 'Monaco', 'Consolas', monospace;
-  --yellow: #d29922; /* Nivel 2 */
-  --orange: #f0883e; /* Nivel 3 */
-  --red: #f85149;    /* Nivel 4 */
-  --green: #3fb950;  /* Nivel 1 */
+  /* Variables alineadas al diseño global */
+  --bg-dark: #0d1117;
+  --bg-card: #161b22;
+  --accent: #58a6ff; /* Azul suave para links/acciones */
+  --peru-red: #b71c1c;
+  
+  /* Colores Semáforo */
+  --green: #3fb950;
+  --yellow: #d29922;
+  --orange: #f0883e;
+  --red: #f85149;
 }
 
-/* 1. CONTENEDOR PRINCIPAL: Centra la lista y limita el ancho en PC */
 .lista-container {
   background-color: var(--bg-dark);
   padding: 1rem;
@@ -20,163 +21,140 @@
 
 .candidates-full-width-list {
   width: 100%;
-  max-width: 950px; /* EVITA QUE SE ABRA A TODA LA PANTALLA EN PC */
+  max-width: 900px; /* Tamaño ideal para lectura */
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.8rem;
 }
 
-/* 2. TARJETA BASE */
+/* TARJETA CON FUENTE INTER */
 .candidate-master-card {
   background: var(--bg-card);
-  border-radius: 4px;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
-  border-left: 4px solid transparent;
-  transition: background 0.2s;
+  border: 1px solid #30363d;
+  border-left: 6px solid transparent;
+  transition: transform 0.2s, background 0.2s;
+  font-family: 'Inter', sans-serif; /* Aplicando tu fuente */
 }
 
-.candidate-master-card:hover { background: #243147; }
+.candidate-master-card:hover { 
+  background: #1c2128;
+  transform: translateX(4px);
+}
 
-/* 3. FILA 1: IDENTIDAD (ESCRITORIO) */
+/* HEADER IDENTIDAD */
 .row-header-compact {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0.8rem;
-  background: rgba(0, 0, 0, 0.2);
+  padding: 0.7rem 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-top-right-radius: 8px;
 }
 
-.identity-line { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-.acronym-txt { color: #f8fafc; font-weight: 800; font-size: 0.7rem; }
-.name-txt { color: #fff; font-size: 0.9rem; font-weight: 700; }
-.party-txt { color: #94a3b8; font-size: 0.75rem; }
-.pos-txt { color: #64748b; font-size: 0.7rem; }
-.bar-sep { color: #334155; }
+.identity-line { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.acronym-txt { color: #f8fafc; font-weight: 800; font-size: 0.75rem; }
+.name-txt { color: #fff; font-size: 1rem; font-weight: 700; letter-spacing: -0.2px; }
+.party-txt { color: #8b949e; font-size: 0.8rem; }
+.pos-txt { color: #484f58; font-size: 0.75rem; font-weight: 500; }
+.bar-sep { color: #30363d; }
 
 .level-badge {
-  font-size: 0.6rem;
-  font-weight: 900;
-  padding: 2px 8px;
-  border-radius: 3px;
-  text-transform: uppercase;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 4px;
 }
 
-/* 4. FILA 2: CONTENIDO (Estilo Mono del detalle) */
+/* CUERPO DEL TEXTO */
 .row-body-content {
-  padding: 0.6rem 0.8rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.5rem;
 }
 
 .title-accent {
   color: var(--accent);
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 800;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .desc-txt {
-  color: #cbd5e1;
-  font-size: 0.82rem;
-  line-height: 1.4;
-  font-family: var(--font-tech); /* Fuente técnica del detalle */
+  color: #e6edf3;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-weight: 400;
 }
 
 .detail-nested {
-  font-size: 0.75rem;
-  color: #64748b;
-  background: rgba(0,0,0,0.15);
-  padding: 0.4rem;
-  border-radius: 3px;
-  font-style: italic;
+  font-size: 0.85rem;
+  color: #8b949e;
+  background: #0d1117;
+  padding: 0.8rem;
+  border-radius: 6px;
+  border-left: 2px solid #30363d;
+  margin-top: 5px;
 }
 
-/* 5. FILA 3: FOOTER ACCIONES */
+/* ACCIONES Y PUNTAJE */
 .row-footer-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.4rem 0.8rem;
-  border-top: 1px solid rgba(255,255,255,0.03);
+  padding: 0.8rem 1rem;
+  border-top: 1px solid #30363d;
 }
 
-.meta-info { display: flex; align-items: center; gap: 0.8rem; }
-.tag-type { font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 2px; }
+.meta-info { display: flex; align-items: center; gap: 1rem; }
+.tag-type { font-size: 0.65rem; font-weight: 800; padding: 3px 8px; border-radius: 4px; }
 
-/* Colores de etiquetas según tipo */
-.tag-PLAN_GOBIERNO { background: #064e3b; color: #6ee7b7; }
-.tag-ANTECEDENTE { background: #450a0a; color: #fca5a5; }
+.tag-PLAN_GOBIERNO { background: #23863622; color: #3fb950; border: 1px solid #238636; }
+.tag-ANTECEDENTE { background: #da363322; color: #f85149; border: 1px solid #da3633; }
 
-.src-txt { color: #475569; font-size: 0.6rem; font-family: var(--font-tech); }
+.src-txt { color: #484f58; font-size: 0.7rem; font-weight: 500; }
 
-.action-block { display: flex; align-items: center; gap: 1.2rem; }
-.score-display { text-align: right; line-height: 0.9; }
-.score-num { color: var(--accent); font-weight: 800; font-size: 1.1rem; }
-.score-lab { font-size: 0.45rem; color: #475569; display: block; }
+.action-block { display: flex; align-items: center; gap: 1.5rem; }
+.score-display { text-align: right; }
+.score-num { color: #fff; font-weight: 800; font-size: 1.2rem; }
+.score-lab { font-size: 0.55rem; color: #8b949e; font-weight: 700; display: block; letter-spacing: 1px; }
 
 .btn-action {
-  background: transparent;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  padding: 4px 12px;
-  border-radius: 3px;
-  font-weight: 800;
-  font-size: 0.65rem;
+  background: var(--peru-red);
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 0.75rem;
   cursor: pointer;
 }
 
-.btn-action:hover { background: var(--accent); color: #000; }
+.btn-action:hover { background: #e60000; }
 
-/* --- RESPONSIVO PARA CELULARES --- */
+/* RESPONSIVO */
 @media (max-width: 600px) {
-  .row-header-compact {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-    position: relative;
-  }
-
-  .level-badge {
-    position: absolute;
-    right: 0.8rem;
-    top: 0.5rem;
-  }
-
-  .identity-line { padding-right: 60px; } /* Espacio para que el nombre no choque con el nivel */
-
-  .row-footer-actions {
-    flex-direction: column;
-    gap: 0.8rem;
-    align-items: flex-start;
-  }
-
-  .meta-info {
-    width: 100%;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    padding-bottom: 0.5rem;
-  }
-
-  .action-block {
-    width: 100%;
-    justify-content: space-between; /* Puntaje a la izquierda, botón a la derecha */
-  }
+  .row-header-compact { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+  .level-badge { align-self: flex-end; }
+  .identity-line { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+  .bar-sep { display: none; }
+  .row-footer-actions { flex-direction: column; gap: 1rem; align-items: stretch; }
+  .action-block { justify-content: space-between; }
 }
 
-/* --- COLORES SEMÁFORO (BORDES Y NIVELES) --- */
-/* Nivel 1: Verde (Impecable) */
-.lvl-1 { background: var(--green); color: #000; }
+/* NIVELES SEMÁFORO */
 .border-lvl-1 { border-left-color: var(--green); }
+.lvl-1 { background: var(--green); color: #000; }
 
-/* Nivel 2: Amarillo (Recomendable) -> AQUÍ ESTABA EL CAMBIO */
-.lvl-2 { background: var(--yellow); color: #000; }
 .border-lvl-2 { border-left-color: var(--yellow); }
+.lvl-2 { background: var(--yellow); color: #000; }
 
-/* Nivel 3: Naranja (Observaciones) */
-.lvl-3 { background: var(--orange); color: #000; }
 .border-lvl-3 { border-left-color: var(--orange); }
+.lvl-3 { background: var(--orange); color: #000; }
 
-/* Nivel 4: Rojo (Peligro) */
-.lvl-4 { background: var(--red); color: #fff; }
 .border-lvl-4 { border-left-color: var(--red); }
+.lvl-4 { background: var(--red); color: #fff; }

@@ -1,59 +1,60 @@
 .inicio-container {
-  min-height: 100vh;
-  background: #0a0a0a;
   padding: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  min-height: 80vh;
 }
 
-.search-section-full {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 2rem;
+.search-wrap {
+  max-width: 900px;
+  margin: 0 auto 2.5rem;
 }
 
-/* MARCO PERUANO */
+/* MARCO TIPO BAÑERA (ALTURA AUMENTADA) */
 .peru-frame {
   position: relative;
   background: #161b22;
   border-radius: 12px;
-  padding: 3px;
+  padding: 2px;
   background-image: linear-gradient(#161b22, #161b22), 
                     linear-gradient(to right, #b71c1c 15%, #ffffff 15%, #ffffff 85%, #b71c1c 85%);
   background-origin: border-box;
   background-clip: content-box, border-box;
+  display: flex;
+  min-height: 120px; /* Altura ideal para coincidir con el PE */
 }
 
-/* LETRA PE MARCA DE AGUA */
+/* PE CENTRADO ABSOLUTO */
 .watermark-pe {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: clamp(8rem, 25vw, 15rem); 
+  font-size: 7.5rem; /* Tamaño grande para la marca de agua */
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.03); 
   font-family: 'Arial Black', sans-serif;
   pointer-events: none;
   z-index: 0;
 }
 
-.full-textarea {
+.compact-textarea {
   width: 100%;
-  min-height: 200px;
+  min-height: 110px;
   background: transparent;
   border: none;
   color: #e6edf3;
-  padding: 1.5rem;
-  padding-bottom: 4rem; /* Espacio extra para que el botón no tape el texto */
+  padding: 1.5rem 120px 1.5rem 1.5rem;
+  font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
   line-height: 1.6;
   outline: none;
-  resize: vertical;
-  z-index: 1;
+  resize: none;
+  z-index: 1; /* Por encima de la marca de agua */
   position: relative;
 }
 
-/* BOTÓN ROJO FLOTANTE DENTRO */
-.btn-search-floating {
+/* BOTÓN DE ACCIÓN */
+.btn-search-action {
   position: absolute;
   right: 15px;
   bottom: 15px;
@@ -61,38 +62,54 @@
   background: #b71c1c;
   color: white;
   border: none;
-  padding: 12px 30px;
-  border-radius: 8px;
-  font-weight: bold;
+  padding: 10px 25px;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 0.9rem;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  transition: transform 0.2s, background 0.2s;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.btn-search-floating:hover:not(:disabled) {
+.btn-search-action:hover:not(:disabled) {
   background: #d32f2f;
-  transform: scale(1.05);
+  transform: translateY(-1px);
 }
 
-.btn-search-floating:disabled {
+.btn-search-action:disabled {
   background: #30363d;
   color: #8b949e;
   cursor: not-allowed;
   box-shadow: none;
 }
 
-/* LOADER Y ESTADOS */
+/* ESTADOS Y CARGA */
+.state-msg {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #8b949e;
+}
+
 .loader-peru {
   width: 35px; height: 35px;
   border: 4px solid rgba(255,255,255,0.1);
   border-top-color: #b71c1c;
-  border-radius: 50%; margin: 0 auto 15px;
+  border-radius: 50%;
+  margin: 0 auto 15px;
   animation: spin 1s linear infinite;
 }
+
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.state-msg { text-align: center; padding: 4rem; color: #8b949e; }
-.clear-link { 
-  background: transparent; border: 1px solid #30363d; color: #38bdf8;
-  padding: 8px 20px; border-radius: 5px; cursor: pointer;
+.clear-link, .retry-link {
+  background: #21262d;
+  color: white;
+  border: 1px solid #30363d;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-weight: 600;
 }
+
+.clear-link:hover { background: #30363d; }
