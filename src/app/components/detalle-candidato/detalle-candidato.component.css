@@ -3,8 +3,9 @@
   --bg-card: #1e293b; 
   --accent: #38bdf8; 
   --red: #ef4444; 
-  --orange: #f59e0b; 
+  --orange-sev: #f59e0b; 
   --yellow: #eab308;
+  --purple: #a855f7;
   --green: #4ade80; 
   --text-main: #e2e8f0; 
   --text-muted: #94a3b8; 
@@ -30,58 +31,31 @@
 }
 
 .header-left-side { display: flex; align-items: center; gap: 15px; }
-
 .btn-back-smart { background: transparent; color: var(--accent); border: none; font-weight: 800; cursor: pointer; font-family: var(--font-main); }
 .candidate-name { font-size: 1.1rem; font-weight: 800; margin: 0; color: #fff; }
 .candidate-party-text { font-size: 0.7rem; color: var(--text-muted); margin: 0; }
 
-/* Contenedor para alinear logo y nivel */
-.header-right-meta { 
-  display: flex; 
-  align-items: center; 
-  gap: 10px; 
-}
-
-/* Logo adaptado al tamaño del Nivel */
+.header-right-meta { display: flex; align-items: center; gap: 10px; }
 .candidate-logo-detail {
-  height: 62px; 
-  width: 62px;
-  object-fit: contain;
-  background: white;
-  border-radius: 8px;
-  padding: 4px;
-  border: 1px solid rgba(255,255,255,0.1);
+  height: 62px; width: 62px; object-fit: contain; background: white; border-radius: 8px; padding: 4px; border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* SEMAFORO NIVEL */
+/* SEMAFORO NIVEL (FONDO PINTADO) */
 .level-pill { 
-  padding: 0.3rem 0.8rem; 
-  border-radius: 8px; 
-  border: 2px solid; 
-  background: rgba(0,0,0,0.3); 
-  text-align: center; 
-  min-width: 60px;
-  height: 62px; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 0.3rem 0.8rem; border-radius: 8px; text-align: center; min-width: 60px;
+  height: 62px; display: flex; flex-direction: column; justify-content: center;
 }
-.level-1 { border-color: var(--green); color: var(--green); }
-.level-2 { border-color: var(--yellow); color: var(--yellow); }
-.level-3 { border-color: var(--orange); color: var(--orange); }
-.level-4, .level-5 { border-color: var(--red); color: var(--red); }
+.level-1 { background: var(--green); color: #000; }
+.level-2 { background: var(--yellow); color: #000; }
+.level-3 { background: var(--purple); color: #fff; }
+.level-4, .level-5 { background: var(--red); color: #fff; }
+
 .lvl-num { font-size: 1.2rem; font-weight: 900; line-height: 1; display: block; }
 .lvl-label { font-size: 0.5rem; font-weight: 800; }
 
 /* --- GRID SCORES --- */
-.nav-scores-container { 
-  display: grid; 
-  grid-template-columns: 1fr 1fr 1fr; 
-  gap: 0.5rem; 
-  margin: 1.5rem 0; 
-}
+.nav-scores-container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin: 1.5rem 0; }
 .scores-group, .scores-group-center { display: flex; flex-direction: column; gap: 0.5rem; }
-
 .score-card-mini, .score-card-main { 
   background: var(--bg-card); border-radius: 10px; padding: 0.6rem; 
   text-align: center; border: 1px solid rgba(255,255,255,0.05); cursor: pointer;
@@ -92,7 +66,7 @@
 
 .card-success { border-color: var(--green) !important; color: var(--green); }
 .card-warning { border-color: var(--yellow) !important; color: var(--yellow); }
-.card-observe { border-color: var(--orange) !important; color: var(--orange); }
+.card-observe { border-color: var(--purple) !important; color: var(--purple); }
 .card-danger { border-color: var(--red) !important; color: var(--red); }
 
 /* --- CARDS --- */
@@ -100,24 +74,17 @@
   background: var(--bg-card); border-radius: 10px; margin-bottom: 0.8rem; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
 }
 .proposal-card { border-left: 4px solid var(--accent); }
-
-/* Detalle Propuestas en 2 columnas (Escritorio) */
-.proposal-two-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
+.proposal-two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
 
 /* ESTILOS DE SEVERIDAD JUDICIAL */
 .b-grave { border-left: 4px solid var(--red); background: rgba(239, 68, 68, 0.05); }
-.b-mod { border-left: 4px solid var(--orange); background: rgba(245, 158, 11, 0.05); }
+.b-mod { border-left: 4px solid var(--orange-sev); background: rgba(245, 158, 11, 0.05); }
 .b-leve { border-left: 4px solid var(--blue-light); background: rgba(125, 211, 252, 0.05); }
 .b-neu { border-left: 4px solid var(--gray-neu); background: rgba(100, 116, 139, 0.05); }
 
 .sev-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
 .bg-grave { background: var(--red); box-shadow: 0 0 8px var(--red); }
-.bg-mod { background: var(--orange); }
+.bg-mod { background: var(--orange-sev); }
 .bg-leve { background: var(--blue-light); }
 .bg-neu { background: var(--gray-neu); }
 
@@ -125,13 +92,12 @@
   padding: 0.8rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; gap: 10px;
 }
 .proposal-title, .legal-title { font-size: 0.8rem; font-weight: 700; color: #fff; flex: 1; }
-
 .proposal-body, .legal-body { 
   background: rgba(0,0,0,0.25); padding: 1rem; border-top: 1px solid rgba(255,255,255,0.05); 
 }
 .proposal-desc, .legal-desc { font-size: 0.8rem; line-height: 1.5; color: var(--text-main); margin-bottom: 1rem; }
 
-/* --- LOGROS --- */
+/* --- LOGROS (CORREGIDO TAMAÑO) --- */
 .achievements-container { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem; }
 .achievement-item { 
   display: flex; align-items: flex-start; gap: 0.8rem; 
@@ -144,33 +110,18 @@
 /* DASHBOARDS */
 .compact-dual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1.5rem; }
 .data-card { background: var(--bg-card); padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); }
-.card-mini-header { font-size: 0.6rem; font-weight: 900; color: var(--accent); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px; margin-bottom: 8px; }
 .row { display: flex; justify-content: space-between; font-size: 0.65rem; padding: 4px 0; }
 
-/* --- MEDIA QUERIES (PARA MÓVILES) --- */
+/* --- MEDIA QUERIES --- */
 @media (max-width: 600px) {
   .top-header-ultra-compact { flex-direction: column; align-items: center; gap: 1rem; padding: 1rem; text-align: center; }
   .header-left-side { flex-direction: column; gap: 5px; }
-  
-  .header-right-meta {
-    width: 100%;
-    justify-content: center; 
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 0.8rem;
-    gap: 20px;
-  }
-
+  .header-right-meta { width: 100%; justify-content: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.8rem; gap: 20px; }
   .nav-scores-container { grid-template-columns: 1fr; }
   .scores-group, .scores-group-center { flex-direction: row; width: 100%; }
   .scores-group > div, .scores-group-center > div { flex: 1; }
   .compact-dual-grid { grid-template-columns: 1fr; }
-  
-  /* Pasa a 1 columna en móvil */
-  .proposal-two-columns, .legal-data-grid { 
-    grid-template-columns: 1fr; 
-    gap: 0.8rem; 
-  }
-  
+  .proposal-two-columns, .legal-data-grid { grid-template-columns: 1fr; gap: 0.8rem; }
   .candidate-name { font-size: 1.2rem; }
 }
 
@@ -179,7 +130,7 @@
 .dot-green { width: 6px; height: 6px; background: var(--green); border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
 .text-red { color: var(--red) !important; font-weight: 700; }
 .text-green { color: var(--green) !important; font-weight: 700; }
-.text-orange { color: var(--orange) !important; font-weight: 700; }
+.text-purple { color: var(--purple) !important; font-weight: 700; }
 .bar-container { width: 100%; height: 5px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-top: 4px; }
 .bar-fill { height: 100%; background: var(--accent); border-radius: 4px; }
 .bar-fill.impact { background: var(--green); }

@@ -30,14 +30,6 @@ export class DetalleCandidatoComponent {
     return 'card-danger';
   }
 
-  getScoreColor(score: number | undefined | null): string {
-    if (score === undefined || score === null) return '#94a3b8';
-    if (score >= 80) return '#4ade80'; 
-    if (score >= 60) return '#eab308'; 
-    if (score >= 40) return '#f59e0b'; 
-    return '#ef4444'; 
-  }
-
   scrollToSection(id: string) {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });

@@ -12,14 +12,16 @@
             alt="Logo Partido" 
             class="logo-party"
           >
-
           <span class="bar-sep">|</span>
-          <span class="name-txt">{{ result.name }}</span>
-          <span class="bar-sep">|</span>
-          <span class="party-txt">{{ result.party }}</span>
-          <span class="bar-sep">|</span>
-          <span class="pos-txt">{{ result.position }}</span>
+          <span class="name-txt" [title]="result.name">{{ result.name }}</span>
+          
+          <span class="bar-sep hide-mobile">|</span>
+          <span class="party-txt hide-mobile">{{ result.party }}</span>
+          
+          <span class="bar-sep hide-mobile">|</span>
+          <span class="pos-txt hide-mobile">{{ result.position }}</span>
         </div>
+        
         <div class="level-badge" [ngClass]="'lvl-' + result.rankingLevel">
           NIVEL {{ result.rankingLevel }}
         </div>

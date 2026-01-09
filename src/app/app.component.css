@@ -2,6 +2,8 @@
   --peru-blue: #1e3a8a;
   --peru-red: #b71c1c;
   --dark-bg: #0d1117;
+  /* Dorado para resaltar */
+  --gold-text: #f9e195; 
 }
 
 .app-container {
@@ -13,7 +15,7 @@
   color: #e6edf3;
 }
 
-/* NAVBAR */
+/* --- NAVBAR --- */
 .navbar {
   background-color: var(--peru-blue);
   height: 60px;
@@ -55,7 +57,6 @@
   align-items: center;
 }
 
-/* BOTÓN INICIO (PC) */
 .btn-inicio {
   background-color: var(--peru-red);
   color: white;
@@ -70,7 +71,6 @@
 
 .btn-inicio:hover { background: #d32f2f; }
 
-/* MENU HAMBURGUESA (MÓVIL) */
 .menu-mobile {
   background: transparent;
   border: none;
@@ -88,21 +88,20 @@
   border-radius: 2px;
 }
 
-/* VISIBILIDAD CONDICIONAL */
 .mobile-only { display: none; }
 
 @media (max-width: 768px) {
   .pc-only { display: none; }
   .mobile-only { display: flex; }
-  .brand-text { font-size: 0.9rem; } /* Reduce texto para que no choque con el icono */
+  .brand-text { font-size: 0.9rem; } 
 }
 
-/* MARQUESINA */
+/* --- MARQUESINA (CORREGIDA) --- */
 .ticker-wrap {
   background: #161b22;
   overflow: hidden;
   white-space: nowrap;
-  padding: 8px 0;
+  padding: 10px 0;
   border-bottom: 1px solid #30363d;
 }
 
@@ -112,25 +111,33 @@
 }
 
 .ticker-item {
-  color: #8b949e;
-  font-size: 0.8rem;
-  padding-right: 40px;
+  color: #ffffff; /* Cambio de gris a Blanco para legibilidad */
+  font-size: 0.85rem;
+  padding-right: 50px;
+  font-weight: 400;
 }
 
-.ticker-item b { color: #f85149; }
+/* Color Oro para los Bolds de la marquesina */
+.ticker-item b { 
+  color: #d4af37; 
+  background: linear-gradient(to bottom, #f9e195 0%, #d4af37 50%, #b8860b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
 
 @keyframes marquee-move {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-/* MAIN CONTENT */
+/* --- MAIN CONTENT --- */
 .main-content {
   flex: 1;
   width: 100%;
 }
 
-/* FOOTER */
+/* --- FOOTER --- */
 .app-footer {
   background: #000;
   padding: 20px 15px;
@@ -138,19 +145,22 @@
 }
 
 .footer-levels {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  max-width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1000px;
   margin: 0 auto 20px;
 }
 
 .level-item {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 800;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .footer-credits {
@@ -161,18 +171,20 @@
   padding-top: 15px;
 }
 
-/* SEMÁFORO */
+/* --- COLORES SEMÁFORO --- */
 .c-verde { color: #3fb950; }
 .c-amarillo { color: #d29922; }
-.c-naranja { color: #f0883e; }
+.c-purpura { color: #a855f7; }
 .c-rojo { color: #f85149; }
 
-/* RESPONSIVE FOOTER PC */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .footer-levels {
-    grid-template-columns: repeat(4, auto);
-    justify-content: center;
-    gap: 25px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
-  .level-item { font-size: 0.75rem; }
+  .level-item { 
+    font-size: 0.65rem;
+    justify-content: flex-start; 
+  }
 }

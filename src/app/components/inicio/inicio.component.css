@@ -15,12 +15,12 @@
 .pilares-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  gap: 8px;
 }
 
 .pilar-col {
   background: #1c2128;
-  padding: 12px 8px;
+  padding: 10px 5px;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
@@ -29,15 +29,34 @@
   justify-content: center;
 }
 
-.pilar-head { font-size: 0.75rem; color: #c9d1d9; margin-bottom: 4px; }
-.pilar-desc { font-size: 0.65rem; color: #8b949e; font-style: italic; text-align: center; }
+/* Título superior (Escritorio) */
+.pilar-head { 
+  font-size: 0.7rem; 
+  color: #ffffff; 
+  margin-bottom: 4px; 
+  font-weight: 800;
+  text-transform: uppercase;
+}
 
-/* Colores Pilares */
-.t-judicial b { color: #f85149; }
-.t-plan b { color: #3fb950; }
-.t-transparencia b { color: #38bdf8; }
-.t-confianza b { color: #f0883e; }
-.t-logros b { color: #7dd3fc; }
+/* DESCRIPCIÓN EN COLOR ORO */
+.pilar-desc { 
+  font-size: 0.62rem; 
+  font-style: italic; 
+  text-align: center;
+  font-weight: 600;
+  /* Efecto Oro Metálico */
+  background: linear-gradient(to bottom, #f9e195 0%, #d4af37 50%, #b8860b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* Colores de las negritas dentro del oro */
+.t-judicial b { color: #f85149; -webkit-text-fill-color: #f85149; }
+.t-plan b { color: #3fb950; -webkit-text-fill-color: #3fb950; }
+.t-transparencia b { color: #38bdf8; -webkit-text-fill-color: #38bdf8; }
+.t-confianza b { color: #f0883e; -webkit-text-fill-color: #f0883e; }
+.t-logros b { color: #7dd3fc; -webkit-text-fill-color: #7dd3fc; }
 
 /* --- BUSCADOR --- */
 .search-wrap {
@@ -93,7 +112,6 @@
   border-radius: 6px;
   font-weight: 800;
   cursor: pointer;
-  transition: opacity 0.3s;
 }
 
 .btn-search-action:disabled {
@@ -103,21 +121,20 @@
   opacity: 0.6;
 }
 
-/* --- ESTADOS Y CARGA --- */
+/* --- ESTADOS --- */
 .state-msg {
   text-align: center;
   padding: 3rem 1rem;
-  color: #8b949e;
+  color: #c9d1d9;
 }
 
-/* Mejora visual No Resultados */
 .no-results {
   background: rgba(255,255,255,0.02);
   border-radius: 12px;
   border: 1px dashed #30363d;
   margin-top: 1rem;
+  padding: 20px;
 }
-.no-results-icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.5; }
 
 .loader-peru {
   width: 35px; height: 35px;
@@ -129,52 +146,48 @@
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.clear-link {
-  background: #21262d;
-  color: white;
-  border: 1px solid #30363d;
-  padding: 8px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-/* --- RESPONSIVE MÓVIL --- */
+/* --- RESPONSIVE MÓVIL (UNA SOLA LÍNEA) --- */
 @media (max-width: 768px) {
   .pilares-container {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 0 10px;
+    gap: 6px;
+    padding: 0 5px;
   }
 
   .pilar-col {
-    flex-direction: row;
+    flex-direction: row; /* Alinea título y descripción de lado */
     justify-content: flex-start;
-    padding: 12px 15px;
+    padding: 8px 12px;
+    gap: 8px;
+    white-space: nowrap; /* Impide saltos de línea */
+    overflow: hidden;
   }
 
-  /* BOTÓN FUERA DEL TEXTAREA EN MÓVIL */
+  .pilar-head { 
+    font-size: 0.65rem; 
+    margin-bottom: 0;
+    min-width: 75px; /* Mantiene los títulos alineados a la izquierda */
+    text-align: left;
+  }
+
+  .pilar-desc { 
+    font-size: 0.65rem; /* No crece la letra */
+    text-align: left;
+    flex: 1;
+  }
+
   .peru-frame {
-    flex-direction: column; /* Apila textarea y botón */
+    flex-direction: column;
     min-height: auto;
     padding-bottom: 10px;
   }
 
-  .compact-textarea {
-    padding: 1.2rem;
-    padding-bottom: 10px;
-    min-height: 100px;
-  }
-
   .btn-search-action {
-    position: relative; /* Quita el posicionamiento absoluto */
+    position: relative;
     right: auto;
     bottom: auto;
-    margin: 0 15px 10px; /* Centrado con margen */
-    width: calc(100% - 30px); /* Ocupa casi todo el ancho */
-    padding: 12px;
+    margin: 0 15px 10px;
+    width: calc(100% - 30px);
   }
-  
-  .watermark-pe { font-size: 5rem; }
 }
