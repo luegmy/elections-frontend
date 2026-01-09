@@ -1,15 +1,50 @@
+/* --- CONTENEDOR GENERAL --- */
 .inicio-container {
   padding: 1.5rem;
   font-family: 'Inter', sans-serif;
   min-height: 80vh;
 }
 
-.search-wrap {
+/* --- CUADRO DE PILARES --- */
+.ayuda-filtro {
   max-width: 900px;
-  margin: 0 auto 2.5rem;
+  margin: 0 auto 0.8rem;
+  text-align: center;
 }
 
-/* MARCO TIPO BAÑERA (ALTURA AUMENTADA) */
+.pilares-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.pilar-col {
+  background: #1c2128;
+  padding: 12px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pilar-head { font-size: 0.75rem; color: #c9d1d9; margin-bottom: 4px; }
+.pilar-desc { font-size: 0.65rem; color: #8b949e; font-style: italic; text-align: center; }
+
+/* Colores Pilares */
+.t-judicial b { color: #f85149; }
+.t-plan b { color: #3fb950; }
+.t-transparencia b { color: #38bdf8; }
+.t-confianza b { color: #f0883e; }
+.t-logros b { color: #7dd3fc; }
+
+/* --- BUSCADOR --- */
+.search-wrap {
+  max-width: 900px;
+  margin: 0 auto 1.5rem;
+}
+
 .peru-frame {
   position: relative;
   background: #161b22;
@@ -20,19 +55,15 @@
   background-origin: border-box;
   background-clip: content-box, border-box;
   display: flex;
-  min-height: 120px; /* Altura ideal para coincidir con el PE */
+  min-height: 120px;
 }
 
-/* PE CENTRADO ABSOLUTO */
 .watermark-pe {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 7.5rem; /* Tamaño grande para la marca de agua */
-  font-weight: 900;
+  font-size: 7.5rem; font-weight: 900;
   color: rgba(255, 255, 255, 0.03); 
-  font-family: 'Arial Black', sans-serif;
   pointer-events: none;
   z-index: 0;
 }
@@ -44,20 +75,16 @@
   border: none;
   color: #e6edf3;
   padding: 1.5rem 120px 1.5rem 1.5rem;
-  font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
-  line-height: 1.6;
   outline: none;
   resize: none;
-  z-index: 1; /* Por encima de la marca de agua */
+  z-index: 1;
   position: relative;
 }
 
-/* BOTÓN DE ACCIÓN */
 .btn-search-action {
   position: absolute;
-  right: 15px;
-  bottom: 15px;
+  right: 15px; bottom: 15px;
   z-index: 10;
   background: #b71c1c;
   color: white;
@@ -65,30 +92,32 @@
   padding: 10px 25px;
   border-radius: 6px;
   font-weight: 800;
-  font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.btn-search-action:hover:not(:disabled) {
-  background: #d32f2f;
-  transform: translateY(-1px);
+  transition: opacity 0.3s;
 }
 
 .btn-search-action:disabled {
   background: #30363d;
   color: #8b949e;
   cursor: not-allowed;
-  box-shadow: none;
+  opacity: 0.6;
 }
 
-/* ESTADOS Y CARGA */
+/* --- ESTADOS Y CARGA --- */
 .state-msg {
   text-align: center;
-  padding: 4rem 2rem;
+  padding: 3rem 1rem;
   color: #8b949e;
 }
+
+/* Mejora visual No Resultados */
+.no-results {
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  border: 1px dashed #30363d;
+  margin-top: 1rem;
+}
+.no-results-icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.5; }
 
 .loader-peru {
   width: 35px; height: 35px;
@@ -98,18 +127,54 @@
   margin: 0 auto 15px;
   animation: spin 1s linear infinite;
 }
-
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.clear-link, .retry-link {
+.clear-link {
   background: #21262d;
   color: white;
   border: 1px solid #30363d;
-  padding: 10px 20px;
+  padding: 8px 20px;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 15px;
-  font-weight: 600;
+  margin-top: 10px;
 }
 
-.clear-link:hover { background: #30363d; }
+/* --- RESPONSIVE MÓVIL --- */
+@media (max-width: 768px) {
+  .pilares-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 10px;
+  }
+
+  .pilar-col {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 12px 15px;
+  }
+
+  /* BOTÓN FUERA DEL TEXTAREA EN MÓVIL */
+  .peru-frame {
+    flex-direction: column; /* Apila textarea y botón */
+    min-height: auto;
+    padding-bottom: 10px;
+  }
+
+  .compact-textarea {
+    padding: 1.2rem;
+    padding-bottom: 10px;
+    min-height: 100px;
+  }
+
+  .btn-search-action {
+    position: relative; /* Quita el posicionamiento absoluto */
+    right: auto;
+    bottom: auto;
+    margin: 0 15px 10px; /* Centrado con margen */
+    width: calc(100% - 30px); /* Ocupa casi todo el ancho */
+    padding: 12px;
+  }
+  
+  .watermark-pe { font-size: 5rem; }
+}

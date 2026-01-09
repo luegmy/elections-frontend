@@ -7,9 +7,13 @@
         <p class="candidate-party-text">{{ candidate?.party }}</p>
       </div>
     </div>
-    <div class="level-pill" [ngClass]="'level-' + candidate?.rankingLevel">
-      <span class="lvl-label">NIVEL</span>
-      <span class="lvl-num">{{ candidate?.rankingLevel }}</span>
+    
+    <div class="header-right-meta">
+      <img [src]="candidate?.partyAcronym" alt="Logo" class="candidate-logo-detail">
+      <div class="level-pill" [ngClass]="'level-' + candidate?.rankingLevel">
+        <span class="lvl-label">NIVEL</span>
+        <span class="lvl-num">{{ candidate?.rankingLevel }}</span>
+      </div>
     </div>
   </div>
 
@@ -133,15 +137,16 @@
 
     <div class="compact-dual-grid">
       <div class="data-card" id="transparencia">
-        <div class="card-mini-header">TRANSPARENCIA</div>
+        <h2 class="section-title-return" style="margin-top: 0; margin-bottom: 10px;" (click)="scrollToSection('anchor-top')">TRANSPARENCIA ▲</h2>
         <div class="row"><span>Hoja de Vida:</span> <span class="text-green">PRESENTADA</span></div>
         <div class="row"><span>Inconsistencias:</span> <span [class.text-red]="candidate?.transparency?.declarationInconsistencies > 0">{{ candidate?.transparency?.declarationInconsistencies }}</span></div>
         <div class="row"><span>Asistencia:</span> <span class="text-green">{{ candidate?.transparency?.attendancePercentage }}%</span></div>
         <div class="row"><span>Ingresos:</span> <span class="text-green">SÍ</span></div>
         <div class="row"><span>Auditorías:</span> <span class="text-green">DISPONIBLES</span></div>
       </div>
+
       <div class="data-card" id="confianza">
-        <div class="card-mini-header">CONFIANZA</div>
+        <h2 class="section-title-return" style="margin-top: 0; margin-bottom: 10px;" (click)="scrollToSection('anchor-top')">CONFIANZA ▲</h2>
         <div class="row"><span>Mayores:</span> <span class="text-red">{{ candidate?.trust?.majorSanctions }}</span></div>
         <div class="row"><span>Cambios Partido:</span> <span class="text-orange">{{ candidate?.trust?.partySwitches }}</span></div>
         <div class="row"><span>Fact-Check:</span> <span class="text-red">{{ candidate?.trust?.factCheckFailures }}</span></div>

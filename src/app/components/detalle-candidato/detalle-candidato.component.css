@@ -9,6 +9,8 @@
   --text-main: #e2e8f0; 
   --text-muted: #94a3b8; 
   --font-main: 'Inter', system-ui, sans-serif;
+  --blue-light: #7dd3fc;
+  --gray-neu: #64748b;
 }
 
 .detalle-container { 
@@ -26,12 +28,44 @@
   background: var(--bg-card); padding: 0.8rem 1rem; border-radius: 12px;
   position: sticky; top: 10px; z-index: 100; border: 1px solid rgba(255,255,255,0.1);
 }
+
+.header-left-side { display: flex; align-items: center; gap: 15px; }
+
 .btn-back-smart { background: transparent; color: var(--accent); border: none; font-weight: 800; cursor: pointer; font-family: var(--font-main); }
 .candidate-name { font-size: 1.1rem; font-weight: 800; margin: 0; color: #fff; }
 .candidate-party-text { font-size: 0.7rem; color: var(--text-muted); margin: 0; }
 
+/* Contenedor para alinear logo y nivel */
+.header-right-meta { 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+}
+
+/* Logo adaptado al tamaño del Nivel */
+.candidate-logo-detail {
+  height: 62px; 
+  width: 62px;
+  object-fit: contain;
+  background: white;
+  border-radius: 8px;
+  padding: 4px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
 /* SEMAFORO NIVEL */
-.level-pill { padding: 0.3rem 0.8rem; border-radius: 8px; border: 2px solid; background: rgba(0,0,0,0.3); text-align: center; min-width: 60px; }
+.level-pill { 
+  padding: 0.3rem 0.8rem; 
+  border-radius: 8px; 
+  border: 2px solid; 
+  background: rgba(0,0,0,0.3); 
+  text-align: center; 
+  min-width: 60px;
+  height: 62px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .level-1 { border-color: var(--green); color: var(--green); }
 .level-2 { border-color: var(--yellow); color: var(--yellow); }
 .level-3 { border-color: var(--orange); color: var(--orange); }
@@ -39,7 +73,7 @@
 .lvl-num { font-size: 1.2rem; font-weight: 900; line-height: 1; display: block; }
 .lvl-label { font-size: 0.5rem; font-weight: 800; }
 
-/* --- GRID SCORES (AJUSTADO PARA MÓVIL) --- */
+/* --- GRID SCORES --- */
 .nav-scores-container { 
   display: grid; 
   grid-template-columns: 1fr 1fr 1fr; 
@@ -67,6 +101,26 @@
 }
 .proposal-card { border-left: 4px solid var(--accent); }
 
+/* Detalle Propuestas en 2 columnas (Escritorio) */
+.proposal-two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* ESTILOS DE SEVERIDAD JUDICIAL */
+.b-grave { border-left: 4px solid var(--red); background: rgba(239, 68, 68, 0.05); }
+.b-mod { border-left: 4px solid var(--orange); background: rgba(245, 158, 11, 0.05); }
+.b-leve { border-left: 4px solid var(--blue-light); background: rgba(125, 211, 252, 0.05); }
+.b-neu { border-left: 4px solid var(--gray-neu); background: rgba(100, 116, 139, 0.05); }
+
+.sev-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+.bg-grave { background: var(--red); box-shadow: 0 0 8px var(--red); }
+.bg-mod { background: var(--orange); }
+.bg-leve { background: var(--blue-light); }
+.bg-neu { background: var(--gray-neu); }
+
 .proposal-header, .legal-header { 
   padding: 0.8rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; gap: 10px;
 }
@@ -77,7 +131,7 @@
 }
 .proposal-desc, .legal-desc { font-size: 0.8rem; line-height: 1.5; color: var(--text-main); margin-bottom: 1rem; }
 
-/* --- LOGROS (SOMBREADO) --- */
+/* --- LOGROS --- */
 .achievements-container { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem; }
 .achievement-item { 
   display: flex; align-items: flex-start; gap: 0.8rem; 
@@ -95,30 +149,29 @@
 
 /* --- MEDIA QUERIES (PARA MÓVILES) --- */
 @media (max-width: 600px) {
-  .nav-scores-container {
-    grid-template-columns: 1fr; /* Una sola columna en móvil */
+  .top-header-ultra-compact { flex-direction: column; align-items: center; gap: 1rem; padding: 1rem; text-align: center; }
+  .header-left-side { flex-direction: column; gap: 5px; }
+  
+  .header-right-meta {
+    width: 100%;
+    justify-content: center; 
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 0.8rem;
+    gap: 20px;
+  }
+
+  .nav-scores-container { grid-template-columns: 1fr; }
+  .scores-group, .scores-group-center { flex-direction: row; width: 100%; }
+  .scores-group > div, .scores-group-center > div { flex: 1; }
+  .compact-dual-grid { grid-template-columns: 1fr; }
+  
+  /* Pasa a 1 columna en móvil */
+  .proposal-two-columns, .legal-data-grid { 
+    grid-template-columns: 1fr; 
+    gap: 0.8rem; 
   }
   
-  .scores-group, .scores-group-center {
-    flex-direction: row; /* En móvil, ponemos los pares de scores lado a lado */
-    width: 100%;
-  }
-
-  .scores-group > div, .scores-group-center > div {
-    flex: 1; /* Para que midan lo mismo */
-  }
-
-  .compact-dual-grid {
-    grid-template-columns: 1fr; /* Dashboards uno debajo de otro */
-  }
-
-  .proposal-two-columns, .legal-data-grid {
-    grid-template-columns: 1fr; /* Datos técnicos uno debajo de otro */
-    gap: 0.8rem;
-  }
-
-  .candidate-name { font-size: 1rem; }
-  .top-header-ultra-compact { padding: 0.6rem; }
+  .candidate-name { font-size: 1.2rem; }
 }
 
 /* UTILIDADES */

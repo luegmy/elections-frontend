@@ -13,23 +13,23 @@
   color: #e6edf3;
 }
 
-/* NAVBAR AZUL ORIGINAL */
+/* NAVBAR */
 .navbar {
   background-color: var(--peru-blue);
   height: 60px;
   display: flex;
   align-items: center;
   border-bottom: 4px solid var(--peru-red);
-  /* --- AJUSTE DE SEGURIDAD --- */
-  position: relative; 
-  z-index: 1000; 
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .nav-content {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,61 +38,86 @@
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
-.brand-icon { font-size: 1.5rem; }
-.brand-text { color: white; font-weight: 800; font-size: 1.2rem; letter-spacing: 0.5px; }
+.brand-icon { font-size: 1.3rem; }
+.brand-text { 
+  color: white; 
+  font-weight: 800; 
+  font-size: 1.1rem; 
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
 
-/* MODIFICACIÓN AQUÍ: Añadimos z-index al contenedor de links */
 .nav-links {
   display: flex;
   align-items: center;
-  position: relative;
-  z-index: 10001;
 }
 
+/* BOTÓN INICIO (PC) */
 .btn-inicio {
   background-color: var(--peru-red);
   color: white;
-  text-decoration: none;
-  padding: 6px 18px;
+  padding: 8px 20px;
   border-radius: 4px;
   font-weight: bold;
   font-size: 0.85rem;
-  /* --- AJUSTES DE SEGURIDAD PARA EL CLIC --- */
-  position: relative;
-  z-index: 10002; /* Aumentado para estar sobre todo */
-  pointer-events: auto !important;
-  cursor: pointer !important;
-  display: inline-block; 
-  border: none; /* Seguridad por si usas etiqueta button */
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-/* MARQUESINA VELOZ */
+.btn-inicio:hover { background: #d32f2f; }
+
+/* MENU HAMBURGUESA (MÓVIL) */
+.menu-mobile {
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.menu-mobile .bar {
+  width: 22px;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+/* VISIBILIDAD CONDICIONAL */
+.mobile-only { display: none; }
+
+@media (max-width: 768px) {
+  .pc-only { display: none; }
+  .mobile-only { display: flex; }
+  .brand-text { font-size: 0.9rem; } /* Reduce texto para que no choque con el icono */
+}
+
+/* MARQUESINA */
 .ticker-wrap {
   background: #161b22;
   overflow: hidden;
   white-space: nowrap;
-  padding: 10px 0;
-  border-bottom: 1px solid #333;
-  /* --- AJUSTE PARA QUE NO SE TRASLAPE --- */
-  position: relative;
-  z-index: 10;
+  padding: 8px 0;
+  border-bottom: 1px solid #30363d;
 }
 
 .ticker {
   display: inline-flex;
-  animation: marquee-move 20s linear infinite;
+  animation: marquee-move 25s linear infinite;
 }
 
 .ticker-item {
   color: #8b949e;
-  font-size: 0.9rem;
-  padding-right: 50px;
+  font-size: 0.8rem;
+  padding-right: 40px;
 }
 
-.ticker-item b { color: #fff; }
+.ticker-item b { color: #f85149; }
 
 @keyframes marquee-move {
   0% { transform: translateX(0); }
@@ -103,49 +128,51 @@
 .main-content {
   flex: 1;
   width: 100%;
-  position: relative;
-  z-index: 1; /* Se mantiene por debajo de la navbar */
 }
 
-/* FOOTER RESPONSIVO */
+/* FOOTER */
 .app-footer {
   background: #000;
   padding: 20px 15px;
-  border-top: 1px solid #333;
+  border-top: 1px solid #30363d;
 }
 
 .footer-levels {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2x2 en móvil */
-  gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
   max-width: 600px;
-  margin: 0 auto 15px;
+  margin: 0 auto 20px;
 }
 
 .level-item {
-  font-size: 0.7rem;
-  font-weight: 700;
+  font-size: 0.65rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .footer-credits {
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #484f58;
-  border-top: 1px solid #222;
-  padding-top: 10px;
+  border-top: 1px solid #161b22;
+  padding-top: 15px;
 }
 
-/* Colores Semáforo */
+/* SEMÁFORO */
 .c-verde { color: #3fb950; }
 .c-amarillo { color: #d29922; }
 .c-naranja { color: #f0883e; }
 .c-rojo { color: #f85149; }
 
-/* Escritorio */
+/* RESPONSIVE FOOTER PC */
 @media (min-width: 768px) {
   .footer-levels {
     grid-template-columns: repeat(4, auto);
     justify-content: center;
-    gap: 30px;
+    gap: 25px;
   }
+  .level-item { font-size: 0.75rem; }
 }

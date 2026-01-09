@@ -1,31 +1,53 @@
 <div class="inicio-container">
-  <div *ngIf="!showDetail" class="search-wrap">
-    <div class="peru-frame">
-      <div class="watermark-pe">PE</div>
-      
-      <textarea 
-        [(ngModel)]="searchQuery"
-        (keydown)="onKeyPress($event)"
-        placeholder="Ejemplos: lavados, derogacion, sentencias..."
-        [disabled]="loading"
-        class="compact-textarea"
-        rows="3"
-      ></textarea>
-
-      <button 
-        class="btn-search-action"
-        (click)="onSearch()" 
-        [disabled]="!isQueryValid || loading"
-      >
-        <span *ngIf="!loading">ANALIZAR</span>
-        <span *ngIf="loading">...</span>
-      </button>
-    </div>
-  </div>
-
   <div class="content-area">
     <div *ngIf="!showDetail" class="list-view">
       
+      <div class="ayuda-filtro" *ngIf="!loading">
+        <div class="pilares-container">
+          <div class="pilar-col t-judicial">
+            <span class="pilar-head">⚖️ <b>Integridad</b></span>
+            <span class="pilar-desc">¿Tiene juicios o denuncias?</span>
+          </div>
+          <div class="pilar-col t-plan">
+            <span class="pilar-head">📈 <b>Plan</b></span>
+            <span class="pilar-desc">¿Es viable lo que promete?</span>
+          </div>
+          <div class="pilar-col t-transparencia">
+            <span class="pilar-head">💎 <b>Transparencia</b></span>
+            <span class="pilar-desc">¿Su dinero es transparente?</span>
+          </div>
+          <div class="pilar-col t-confianza">
+            <span class="pilar-head">🤝 <b>Confianza</b></span>
+            <span class="pilar-desc">¿Es fiel a sus principios?</span>
+          </div>
+          <div class="pilar-col t-logros">
+            <span class="pilar-head">🏆 <b>Logros</b></span>
+            <span class="pilar-desc">¿Qué hizo por el país?</span>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!showDetail" class="search-wrap">
+        <div class="peru-frame">
+          <div class="watermark-pe">PE</div>
+          <textarea 
+            [(ngModel)]="searchQuery" 
+            (keydown)="onKeyPress($event)" 
+            placeholder="Ejemplos: lavados, derogacion, sentencias..." 
+            [disabled]="loading" 
+            class="compact-textarea" 
+            rows="3">
+          </textarea>
+          <button 
+            class="btn-search-action" 
+            (click)="onSearch()" 
+            [disabled]="searchQuery.length <= 3 || loading">
+            <span *ngIf="!loading">ANALIZAR</span>
+            <span *ngIf="loading">...</span>
+          </button>
+        </div>
+      </div>
+
       <div *ngIf="loading" class="state-msg">
         <div class="loader-peru"></div>
         <p>Procesando información electoral...</p>
@@ -36,23 +58,17 @@
         <button (click)="onSearch()" class="retry-link">Reintentar</button>
       </div>
 
-      <app-lista-candidatos 
-        *ngIf="searchResults.length > 0 && !loading"
-        [searchResults]="searchResults"
-        (candidateSelected)="onCandidateSelected($event)">
-      </app-lista-candidatos>
+      <app-lista-candidatos *ngIf="searchResults.length > 0 && !loading" [searchResults]="searchResults" (candidateSelected)="onCandidateSelected($event)"></app-lista-candidatos>
 
-      <div *ngIf="searchResults.length === 0 && !loading && hasSearched" class="state-msg">
+      <div *ngIf="searchResults.length === 0 && !loading && hasSearched" class="state-msg no-results">
+        <div class="no-results-icon">📂</div>
         <p>No se encontraron candidatos con esos criterios.</p>
         <button (click)="clearSearch()" class="clear-link">Nueva búsqueda</button>
       </div>
     </div>
 
     <div *ngIf="showDetail && selectedCandidate" class="detail-view">
-      <app-detalle-candidato 
-        [candidate]="selectedCandidate"
-        (backToList)="onBackToList()">
-      </app-detalle-candidato>
+      <app-detalle-candidato [candidate]="selectedCandidate" (backToList)="onBackToList()"></app-detalle-candidato>
     </div>
   </div>
 </div>

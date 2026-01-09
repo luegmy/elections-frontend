@@ -14,7 +14,7 @@ export class ListaCandidatosComponent {
   @Output() candidateSelected = new EventEmitter<MatchResponse>();
 
   viewCandidateDetail(result: MatchResponse): void {
-    // Emitimos el objeto completo que ya tiene matchDescription y matchDetailDescription
+    // Emitimos el objeto completo que ya tiene la URL en partyAcronym
     this.candidateSelected.emit(result);
   }
 }

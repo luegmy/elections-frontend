@@ -5,23 +5,26 @@
         <span class="brand-icon">🗳️</span>
         <span class="brand-text">SISTEMA ELECTORAL</span>
       </div>
+      
       <div class="nav-links">
-  <button (click)="irAInicio()" class="btn-inicio">
-    Inicio
-  </button>
-</div>
+        <button (click)="irAInicio()" class="btn-inicio pc-only">
+          Inicio
+        </button>
+        
+        <button class="menu-mobile mobile-only" (click)="irAInicio()">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </button>
+      </div>
     </div>
   </nav>
 
   <div class="ticker-wrap" *ngIf="isInicio">
     <div class="ticker">
-      <div class="ticker-item">
-        🔍 <b>FILTRO ELECTORAL:</b> Revisamos el pasado de cada candidato para que sepas quién es quién. <b>No creas en
-          simples promesas, conoce la verdad aquí.</b>
-      </div>
-      <div class="ticker-item">
-        🔍 <b>FILTRO ELECTORAL:</b> Revisamos el pasado de cada candidato para que sepas quién es quién. <b>No creas en
-          simples promesas, conoce la verdad aquí.</b>
+      <div class="ticker-item" *ngFor="let i of [1,2]">
+        🔍 <b>FILTRO ELECTORAL:</b> Transformamos registros públicos en un <b>Índice de Riesgo Electoral.</b>
+        No evaluamos discursos, auditamos hechos.
       </div>
     </div>
   </div>
@@ -38,7 +41,7 @@
       <div class="level-item c-rojo">● NIVEL 4: PELIGRO</div>
     </div>
     <div class="footer-credits">
-      <p>Desarrollado por : <i>Calibrando Sistemas</i> | Perú - 2026</p>
+      <p>Desarrollado por: <i>Calibrando Sistemas</i> | Perú - 2026</p>
     </div>
   </footer>
 </div>
