@@ -120,9 +120,14 @@
         <div class="row"><span>Sanción Ética:</span> <span class="text-green">NINGUNA</span></div>
       </div>
     </div>
+
     <section class="section-box" id="propuestas">
-      <h2 class="section-title-return" (click)="scrollToSection('anchor-top')">PLAN DE GOBIERNO ▲</h2>
-      <div *ngFor="let p of candidate?.proposals; let i = index" class="proposal-card">
+      <div class="section-header-flex">
+        <h2 class="section-title-return" (click)="scrollToSection('anchor-top')">PLAN DE GOBIERNO ▲</h2>
+        <a *ngIf="candidate.governmentPlan?.documentUrl" [href]="candidate.governmentPlan.documentUrl" target="_blank" class="pdf-link-btn">PDF OFICIAL</a>
+      </div>
+
+      <div *ngFor="let p of candidate.governmentPlan?.proposals; let i = index" class="proposal-card">
         <div class="proposal-header" (click)="toggleItem(expandedProposals, i)">
           <div class="header-left">
             <span class="area-tag">{{ p.area }}</span>
@@ -133,24 +138,39 @@
         <div class="proposal-body" *ngIf="expandedProposals.get(i)">
           <div class="source-info">FUENTE: {{ p.sourcePlan }}</div>
           <p class="proposal-desc">{{ p.detailDescription }}</p>
-          <div class="proposal-two-columns">
-            <div class="p-col">
-              <div class="stat-item">
-                <span class="s-label-tech">Viabilidad: {{ p.feasibilityScore * 100 }}%</span>
-                <div class="bar-container"><div class="bar-fill" [style.width.%]="p.feasibilityScore * 100"></div></div>
-              </div>
-              <div class="stat-item">
-                <span class="s-label-tech">Impacto: {{ p.impactScore * 100 }}%</span>
-                <div class="bar-container"><div class="bar-fill impact" [style.width.%]="p.impactScore * 100"></div></div>
-              </div>
-            </div>
+          
+    <div class="proposal-two-columns">
+  <div class="p-col">
+    <div class="stat-item">
+      <span class="s-label-tech">Viabilidad: {{ (p.feasibilityScore * 100) | number:'1.0-0' }}%</span>
+      <div class="bar-container">
+        <div class="bar-fill" [style.width.%]="p.feasibilityScore * 100"></div>
+      </div>
+    </div>
+    
+    <div class="stat-item">
+      <span class="s-label-tech">Impacto: {{ (p.impactScore * 100) | number:'1.0-0' }}%</span>
+      <div class="bar-container">
+        <div class="bar-fill impact" [style.width.%]="p.impactScore * 100"></div>
+      </div>
+    </div>
+  </div>
+            
             <div class="p-col tech-data">
               <div class="tech-row"><span>Costo:</span> {{ p.costEstimate }}</div>
-              <div class="tech-row" [class.text-red]="p.requiresConstitutionalReform"><span>Reforma:</span> {{ p.requiresConstitutionalReform ? 'SÍ' : 'NO' }}</div>
-              <div class="tech-row" [class.text-red]="p.violatesInternationalTreaties"><span>Tratados:</span> {{ p.violatesInternationalTreaties ? 'VULNERA' : 'RESPETA' }}</div>
+              <div class="tech-row" [class.text-red]="p.requiresConstitutionalReform">
+                <span>Reforma:</span> {{ p.requiresConstitutionalReform ? 'SÍ' : 'NO' }}
+              </div>
+              <div class="tech-row" [class.text-red]="p.violatesInternationalTreaties">
+                <span>Tratados:</span> {{ p.violatesInternationalTreaties ? 'VULNERA' : 'RESPETA' }}
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="no-data-msg" *ngIf="!candidate.governmentPlan?.proposals?.length">
+        No se han encontrado propuestas detalladas para este plan de gobierno. 
       </div>
     </section>
   </div>

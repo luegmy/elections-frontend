@@ -1,10 +1,10 @@
 export enum AchievementType {
-  LAW_APPROVED = 'LAW_APPROVED',
-  LAW_PROPOSED = 'LAW_PROPOSED',
-  PUBLIC_PROJECT_COMPLETED = 'PUBLIC_PROJECT_COMPLETED',
-  ACADEMIC_EXPERIENCE = 'ACADEMIC_EXPERIENCE',
-  PUBLIC_SECTOR_EXPERIENCE = 'PUBLIC_SECTOR_EXPERIENCE',
-  SOCIAL_PROJECT_LEADERSHIP = 'SOCIAL_PROJECT_LEADERSHIP'
+  LAW_APPROVED = 'LEY APRBADO',
+  LAW_PROPOSED = 'LEY PROPUESTA',
+  PUBLIC_PROJECT_COMPLETED = 'PROYECTO PÚBLICO COMPLETADO',
+  ACADEMIC_EXPERIENCE = 'EXPERIENCIA ACADÉMICA',
+  PUBLIC_SECTOR_EXPERIENCE = 'EXPERIENCIA EN EL SECTOR PÚBLICO',
+  SOCIAL_PROJECT_LEADERSHIP = 'LIDERAZGO EN PROYECTO SOCIAL'
 }
 
 export enum IncidentSeverity {
@@ -23,12 +23,23 @@ export enum LegalStatus {
   SENTENCIA_ABSOLUTORIA = 'SENTENCIA_ABSOLUTORIA'
 }
 
+export enum LegalCategory {
+  PENAL, FAMILIA, TRIBUTARY, CIVIL, LABORAL, ADMINISTRATIVE
+}
+
 export interface Achievement {
   description: string;
   type: AchievementType;
   relevance: number;   // 1=Bajo, 2=Medio, 3=Alto
   quantity: number;    // Años, proyectos, etc.
   tags: string[];
+}
+
+export interface GovernmentPlan {
+  id: string;
+  partyCode: string;
+  proposals: Proposal[];
+  documentUrl?: string; // Link al PDF del JNE
 }
 
 export interface Proposal {
@@ -38,7 +49,7 @@ export interface Proposal {
   detailDescription: string;
   area: string;             // Salud, Educación, etc.
   sourcePlan: string;       // Sección del plan
-  planKeywords: string[];
+  keywords: string[];
 
   feasibilityScore: number; // 0.0 - 1.0
   impactScore: number;      // 0.0 - 1.0
@@ -58,6 +69,7 @@ export interface LegalHistoryEntry {
   verified: boolean;
   status: LegalStatus;
   severity: IncidentSeverity;
+  category: LegalCategory;
 }
 
 export interface Transparency {
@@ -116,7 +128,7 @@ export interface Candidate {
   scores: CompositeScore;
   rankingLevel: number;
 
-  proposals: Proposal[];
+  governmentPlan?: GovernmentPlan;
 
   lastAuditDate: string;    // ISO string (LocalDateTime)
   dataSourceVersion: string;
