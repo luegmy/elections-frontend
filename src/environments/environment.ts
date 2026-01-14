@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://elections-backend-wcpi.onrender.com/api/candidates'
+  apiUrl: 'http://localhost:8080/api/candidates'
 };

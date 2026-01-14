@@ -105,26 +105,29 @@
     <div class="compact-dual-grid">
       <div class="data-card" id="transparencia">
         <h2 class="section-title-return" style="margin-top: 0; margin-bottom: 10px;" (click)="scrollToSection('anchor-top')">TRANSPARENCIA ▲</h2>
-        <div class="row"><span>Hoja de Vida:</span> <span class="text-green">PRESENTADA</span></div>
+        <div class="row"><span>Hoja de Vida:</span> <span class="text-green">{{ candidate?.transparency?.submittedDeclaration }}</span></div>
         <div class="row"><span>Inconsistencias:</span> <span [class.text-red]="candidate?.transparency?.declarationInconsistencies > 0">{{ candidate?.transparency?.declarationInconsistencies }}</span></div>
+        <div class="row"><span>Funcionario:</span> <span class="text-green">{{ candidate?.transparency?.wasPublicOfficer }}</span></div>
         <div class="row"><span>Asistencia:</span> <span class="text-green">{{ candidate?.transparency?.attendancePercentage }}%</span></div>
-        <div class="row"><span>Ingresos:</span> <span class="text-green">SÍ</span></div>
-        <div class="row"><span>Auditorías:</span> <span class="text-green">DISPONIBLES</span></div>
+        <div class="row"><span>Ingresos:</span> <span class="text-green">{{ candidate?.transparency?.publishedIncome }}</span></div>
+        <div class="row"><span>Egresos:</span> <span class="text-green">{{ candidate?.transparency?.publishedExpenses }}</span></div>
+        <div class="row"><span>Auditorías:</span> <span class="text-green">{{ candidate?.transparency?.auditsAvailable }}</span></div>
       </div>
 
       <div class="data-card" id="confianza">
         <h2 class="section-title-return" style="margin-top: 0; margin-bottom: 10px;" (click)="scrollToSection('anchor-top')">CONFIANZA ▲</h2>
         <div class="row"><span>Mayores:</span> <span class="text-red">{{ candidate?.trust?.majorSanctions }}</span></div>
+        <div class="row"><span>Menores:</span> <span class="text-red">{{ candidate?.trust?.minorSanctions }}</span></div>
         <div class="row"><span>Cambios Partido:</span> <span class="text-purple">{{ candidate?.trust?.partySwitches }}</span></div>
         <div class="row"><span>Fact-Check:</span> <span class="text-red">{{ candidate?.trust?.factCheckFailures }}</span></div>
-        <div class="row"><span>Sanción Ética:</span> <span class="text-green">NINGUNA</span></div>
+        <div class="row"><span>Sanción Ética:</span> <span class="text-green">{{ candidate?.trust?.ethicsSanction }}</span></div>
       </div>
     </div>
 
     <section class="section-box" id="propuestas">
       <div class="section-header-flex">
         <h2 class="section-title-return" (click)="scrollToSection('anchor-top')">PLAN DE GOBIERNO ▲</h2>
-        <a *ngIf="candidate.governmentPlan?.documentUrl" [href]="candidate.governmentPlan.documentUrl" target="_blank" class="pdf-link-btn">PDF OFICIAL</a>
+        <!-- <a *ngIf="candidate.governmentPlan?.documentUrl" [href]="candidate.governmentPlan.documentUrl" target="_blank" class="pdf-link-btn">PDF OFICIAL</a> -->
       </div>
 
       <div *ngFor="let p of candidate.governmentPlan?.proposals; let i = index" class="proposal-card">
