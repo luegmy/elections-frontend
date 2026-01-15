@@ -12,7 +12,12 @@ export class DetalleCandidatoComponent {
   @Input() candidate: any = null; 
   @Output() backToList = new EventEmitter<void>();
 
-  // Solo mantenemos expansión para estas dos secciones
+  // Estados de expansión para las nuevas secciones de auditoría
+  showExtra = false;       // Inconsistencias de Contraloría
+  showFactCheck = false;   // Fuentes de mentiras detectadas
+  showSanctions = false;   // Detalle de sanciones (Map de Java)
+
+  // Mapas para las secciones con múltiples ítems
   expandedHistory = new Map<number, boolean>();
   expandedProposals = new Map<number, boolean>();
 

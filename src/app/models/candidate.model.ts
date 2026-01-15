@@ -1,5 +1,5 @@
 export enum AchievementType {
-  LAW_APPROVED = 'LEY APRBADO',
+  LAW_APPROVED = 'LEY APROBADA',
   LAW_PROPOSED = 'LEY PROPUESTA',
   PUBLIC_PROJECT_COMPLETED = 'PROYECTO PÚBLICO COMPLETADO',
   ACADEMIC_EXPERIENCE = 'EXPERIENCIA ACADÉMICA',
@@ -36,36 +36,36 @@ export interface Achievement {
 }
 
 export interface GovernmentPlan {
-  id: string;
+  id: string;          // Formato: PLAN-PARTIDO-2026
   partyCode: string;
   proposals: Proposal[];
-  documentUrl?: string; // Link al PDF del JNE
+  documentUrl?: string; // Link al PDF oficial (JNE)
 }
 
 export interface Proposal {
-  id: string;
+  id?: string;
   title: string;
   description: string;
-  detailDescription: string;
-  area: string;             // Salud, Educación, etc.
-  sourcePlan: string;       // Sección del plan
+  detailDescription: string; // IMPORTANTE: El backend penaliza si < 100 caracteres
+  area: string;              // SOCIAL, ECONOMIA, INSTITUCIONAL, AMBIENTAL
+  sourcePlan: string;        // ACTUALIZADO: Ahora debe incluir Pág. y Sección
   keywords: string[];
 
-  feasibilityScore: number; // 0.0 - 1.0
-  impactScore: number;      // 0.0 - 1.0
-  costEstimate: string;
+  feasibilityScore: number;  // 0.0 - 1.0
+  impactScore: number;       // 0.0 - 1.0
+  costEstimate: string;      // ACTUALIZADO: Si es "No especifica", el backend penaliza
+  
   requiresConstitutionalReform: boolean;
-  violatesInternationalTreaties: boolean;
+  violatesInternationalTreaties: boolean; // Si es true, reduce drásticamente la viabilidad
 }
-
 
 export interface LegalHistoryEntry {
   id: string;
-  date: string;              // ISO date (yyyy-MM-dd)
+  date: string;               // ISO date (yyyy-MM-dd)
   title: string;
   description: string;
   expedientNumber: string;
-  source: string;            // URL o entidad
+  source: string;             
   verified: boolean;
   status: LegalStatus;
   severity: IncidentSeverity;
@@ -73,48 +73,44 @@ export interface LegalHistoryEntry {
 }
 
 export interface Transparency {
-  // Contraloría
   submittedDeclaration: boolean;
   declarationInconsistencies: number;
+  inconsistencyDetails?: string[]; // NUEVO: Para listar qué encontró Contraloría
+  economicAuditNotes?: string;     // NUEVO: Notas adicionales sobre su patrimonio
 
-  // Portal de Transparencia
   wasPublicOfficer: boolean;
-  attendancePercentage?: number; // Solo si fue funcionario
+  attendancePercentage?: number; 
 
-  // ONPE – campañas
   publishedIncome: boolean;
   publishedExpenses: boolean;
   auditsAvailable: boolean;
 }
 
 export interface Trust {
-  // Ministerio Público / Ética
   majorSanctions: number;
   minorSanctions: number;
+  sanctionsDetail?: { [key: string]: string[] }; // NUEVO: Mapa de sanciones según Java
 
-  // ROP
-  partySwitches: number;
-
-  // Fact-checking
-  factCheckFailures: number;
-
-  // Registro de sanciones
-  ethicsSanction: boolean;
+  partySwitches: number;      // Transfuguismo
+  factCheckFailures: number;  // Mentiras detectadas en campaña
+  factCheckSources?: string[]; // NUEVO: Links a las verificadoras (Ama Llulla, etc)
+  
+  ethicsSanction: boolean;    // Sanciones del Tribunal de Ética
 }
-
 
 export interface CompositeScore {
   judicialScore: number;
   contributionScore: number;
   transparencyScore: number;
   trustScore: number;
-  finalScore: number;
+  planScore: number;          // NUEVO: El score específico del plan de gobierno
+  finalScore: number;         // El promedio ponderado final
 }
 
 export interface Candidate {
-  code: string;
+  code: string;               // ID único del candidato
   name: string;
-  position: string;        // Cargo al que postula
+  position: string;           
   party: string;
   partyAcronym: string;
   biography: string;
@@ -126,13 +122,17 @@ export interface Candidate {
   trust: Trust;
 
   scores: CompositeScore;
-  rankingLevel: number;
+  rankingLevel: number;       // 1 (VERDE), 2 (AMARILLO), 3 (PURPURA), 4 (ROJO)
 
   governmentPlan?: GovernmentPlan;
 
-  lastAuditDate: string;    // ISO string (LocalDateTime)
+  lastAuditDate: string;      // ISO string
   dataSourceVersion: string;
 }
+
+/**
+ * Interface para la búsqueda y comparativa
+ */
 export interface MatchResponse {
   code: string;
   name: string;
@@ -140,11 +140,10 @@ export interface MatchResponse {
   partyAcronym: string;
   position: string;
   matchType: string; 
-  // Nuevos campos para el mapeo dinámico
-  matchTitle: string;       // El título de la propuesta o nombre del caso
+  matchTitle: string;        
   matchDescription: string;
-  matchDetailDescription: string; // La descripción del match
-  sourcePlan?: string;      // Sección del plan o número de expediente
+  matchDetailDescription: string; 
+  sourcePlan?: string;       
   finalScore: number;
   rankingLevel: number;
 }
