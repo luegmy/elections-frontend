@@ -23,57 +23,46 @@
     <div class="scores-group side">
       <div class="score-card-mini" [ngClass]="getScoreClass(candidate?.scores?.judicialScore)" (click)="scrollToSection('judicial')">
         <span class="s-label">INTEGRIDAD</span>
-        <span class="s-val">{{ candidate?.scores?.judicialScore | number:'1.0-1' }}</span>
+        <span class="s-val">{{ candidate?.scores?.judicialScore | number:'1.1-1' }}</span>
       </div>
       <div class="score-card-mini" [ngClass]="getScoreClass(candidate?.scores?.contributionScore)" (click)="scrollToSection('logros')">
         <span class="s-label">APORTES</span>
-        <span class="s-val">{{ candidate?.scores?.contributionScore | number:'1.0-1' }}</span>
+        <span class="s-val">{{ candidate?.scores?.contributionScore | number:'1.1-1' }}</span>
       </div>
     </div>
 
     <div class="scores-group-center">
       <div class="score-card-main" [ngClass]="getScoreClass(candidate?.scores?.planScore)" (click)="scrollToSection('propuestas')">
         <span class="s-label">PLAN DE GOBIERNO</span>
-        <span class="s-val">{{ candidate?.scores?.planScore | number:'1.0-1' }}</span>
+        <span class="s-val">{{ candidate?.scores?.planScore | number:'1.1-1' }}</span>
       </div>
       <div class="score-card-main" [ngClass]="getScoreClass(candidate?.scores?.finalScore)">
         <span class="s-label">GLOBAL</span>
-        <span class="s-val">{{ candidate?.scores?.finalScore | number:'1.0-1' }}</span>
+        <span class="s-val">{{ candidate?.scores?.finalScore | number:'1.1-1' }}</span>
       </div>
     </div>
 
     <div class="scores-group side">
       <div class="score-card-mini" [ngClass]="getScoreClass(candidate?.scores?.transparencyScore)" (click)="scrollToSection('transparencia')">
         <span class="s-label">TRANSPARENCIA</span>
-        <span class="s-val">{{ candidate?.scores?.transparencyScore | number:'1.0-1' }}</span>
+        <span class="s-val">{{ candidate?.scores?.transparencyScore | number:'1.1-1' }}</span>
       </div>
       <div class="score-card-mini" [ngClass]="getScoreClass(candidate?.scores?.trustScore)" (click)="scrollToSection('confianza')">
         <span class="s-label">CONFIANZA</span>
-        <span class="s-val">{{ candidate?.scores?.trustScore | number:'1.0-1' }}</span>
+        <span class="s-val">{{ candidate?.scores?.trustScore | number:'1.1-1' }}</span>
       </div>
     </div>
   </div>
 
   <div class="content-body-spacer">
-
     <section class="section-box" id="judicial">
       <h2 class="section-title-return" (click)="scrollToSection('anchor-top')">HISTORIAL JUDICIAL ▲</h2>
       <div *ngFor="let h of candidate?.history; let i = index" 
            class="legal-card" 
-           [ngClass]="{
-             'b-grave': h.severity === 'GRAVE', 
-             'b-mod': h.severity === 'MODERADO',
-             'b-leve': h.severity === 'LEVE',
-             'b-neu': h.severity === 'NEUTRO'
-           }">
+           [ngClass]="getSeverityClass(h.severity)">
         <div class="legal-header" (click)="toggleItem(expandedHistory, i)">
           <div class="header-left">
-            <span class="sev-dot" [ngClass]="{
-              'bg-grave': h.severity === 'GRAVE', 
-              'bg-mod': h.severity === 'MODERADO',
-              'bg-leve': h.severity === 'LEVE',
-              'bg-neu': h.severity === 'NEUTRO'
-            }"></span>
+            <span class="sev-dot" [ngClass]="getSeverityBg(h.severity)"></span>
             <span class="legal-title">{{ h.title }}</span>
           </div>
           <div class="header-right">
@@ -95,9 +84,20 @@
     <section class="section-box" id="logros">
       <h2 class="section-title-return" (click)="scrollToSection('anchor-top')">LOGROS Y APORTES ▲</h2>
       <div class="achievements-container">
-        <div *ngFor="let a of candidate?.achievements" class="achievement-item">
-          <span class="dot-green"></span>
-          <p class="achievement-desc-text">{{ a.description }}</p>
+        <div *ngFor="let a of candidate?.achievements" class="achievement-item-smart" 
+             [ngClass]="{'border-red': a.impactScore < 0, 'border-green': a.impactScore >= 0}">
+          <div class="achievement-main">
+            <span class="impact-icon" [ngClass]="a.impactScore < 0 ? 'text-red' : 'text-green'">
+              {{ a.impactScore < 0 ? '▼' : '▲' }}
+            </span>
+            <div class="achievement-info">
+              <p class="achievement-desc-text">{{ a.description }}</p>
+              <div class="achievement-meta">
+                <span class="verified-text" *ngIf="a.verified">✔ Verificado</span>
+                <a *ngIf="a.sourceUrl" [href]="a.sourceUrl" target="_blank" class="source-link-mini">Fuente</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -105,14 +105,12 @@
     <div class="compact-dual-grid">
       <div class="data-card" id="transparencia">
         <h2 class="section-title-return" style="margin-top: 0; margin-bottom: 10px;" (click)="scrollToSection('anchor-top')">TRANSPARENCIA ▲</h2>
-        
         <div class="row">
           <span>Hoja de Vida:</span> 
           <span [ngClass]="candidate?.transparency?.submittedDeclaration ? 'text-green' : 'text-red'">
             {{ candidate?.transparency?.submittedDeclaration ? '✔' : '✘' }}
           </span>
         </div>
-
         <div class="row clickable" (click)="showExtra = !showExtra">
           <span>Inconsistencias:</span> 
           <span [class.text-red]="candidate?.transparency?.declarationInconsistencies > 0">
@@ -125,19 +123,16 @@
             <li *ngFor="let detail of candidate?.transparency?.inconsistencyDetails">{{ detail }}</li>
           </ul>
         </div>
-
         <div class="row">
           <span>Funcionario:</span> 
           <span class="text-white">{{ candidate?.transparency?.wasPublicOfficer ? 'SÍ' : 'NO' }}</span>
         </div>
-        
         <div class="row" *ngIf="candidate?.transparency?.wasPublicOfficer">
           <span>Asistencia:</span> 
           <span [ngClass]="candidate?.transparency?.attendancePercentage > 80 ? 'text-green' : 'text-red'">
             {{ candidate?.transparency?.attendancePercentage }}%
           </span>
         </div>
-
         <div class="row">
           <span>Ingresos/Egresos:</span> 
           <span>
@@ -145,7 +140,6 @@
             <span [ngClass]="candidate?.transparency?.publishedExpenses ? 'text-green' : 'text-red'">{{ candidate?.transparency?.publishedExpenses ? '✔' : '✘' }}</span>
           </span>
         </div>
-
         <div class="audit-note" *ngIf="candidate?.transparency?.economicAuditNotes">
           <small>Nota Contraloría: {{ candidate?.transparency?.economicAuditNotes }}</small>
         </div>
@@ -153,7 +147,6 @@
 
       <div class="data-card" id="confianza">
         <h2 class="section-title-return" style="margin-top: 0; margin-bottom: 10px;" (click)="scrollToSection('anchor-top')">CONFIANZA ▲</h2>
-        
         <div class="row clickable" (click)="showSanctions = !showSanctions">
           <span>Sanciones (M/m):</span> 
           <span [class.text-red]="candidate?.trust?.majorSanctions > 0">
@@ -161,7 +154,6 @@
             <small *ngIf="candidate?.trust?.sanctionsDetail"> (ver detalle ▼)</small>
           </span>
         </div>
-
         <div class="extra-detail-box" *ngIf="showSanctions && candidate?.trust?.sanctionsDetail">
           <div *ngFor="let entry of candidate.trust.sanctionsDetail | keyvalue" class="sanction-group">
             <div class="sanction-category">{{ entry.key }}:</div>
@@ -170,14 +162,12 @@
             </ul>
           </div>
         </div>
-
         <div class="row">
           <span>Cambios Partido:</span> 
           <span [ngClass]="candidate?.trust?.partySwitches > 2 ? 'text-red' : 'text-purple'">
             {{ candidate?.trust?.partySwitches }}
           </span>
         </div>
-
         <div class="row clickable" (click)="showFactCheck = !showFactCheck">
           <span>Fact-Check:</span> 
           <span [class.text-red]="candidate?.trust?.factCheckFailures > 0">
@@ -190,7 +180,6 @@
              <small>• {{ s }}</small>
           </div>
         </div>
-
         <div class="row">
           <span>Sanción Ética:</span> 
           <span [ngClass]="!candidate?.trust?.ethicsSanction ? 'text-green' : 'text-red'">
@@ -205,7 +194,6 @@
         <h2 class="section-title-return" (click)="scrollToSection('anchor-top')">PLAN DE GOBIERNO ▲</h2>
         <a *ngIf="candidate.governmentPlan?.documentUrl" [href]="candidate.governmentPlan.documentUrl" target="_blank" class="pdf-link-btn">PDF OFICIAL</a>
       </div>
-
       <div *ngFor="let p of candidate.governmentPlan?.proposals; let i = index" class="proposal-card">
         <div class="proposal-header" (click)="toggleItem(expandedProposals, i)">
           <div class="header-left">
@@ -217,7 +205,6 @@
         <div class="proposal-body" *ngIf="expandedProposals.get(i)">
           <div class="source-info">FUENTE: {{ p.sourcePlan }}</div>
           <p class="proposal-desc">{{ p.detailDescription }}</p>
-          
           <div class="proposal-two-columns">
             <div class="p-col">
               <div class="stat-item">

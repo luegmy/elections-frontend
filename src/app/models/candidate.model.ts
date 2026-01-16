@@ -1,10 +1,13 @@
 export enum AchievementType {
-  LAW_APPROVED = 'LEY APROBADA',
-  LAW_PROPOSED = 'LEY PROPUESTA',
-  PUBLIC_PROJECT_COMPLETED = 'PROYECTO PÚBLICO COMPLETADO',
-  ACADEMIC_EXPERIENCE = 'EXPERIENCIA ACADÉMICA',
-  PUBLIC_SECTOR_EXPERIENCE = 'EXPERIENCIA EN EL SECTOR PÚBLICO',
-  SOCIAL_PROJECT_LEADERSHIP = 'LIDERAZGO EN PROYECTO SOCIAL'
+  LAW_APPROVED = 'LAW_APPROVED',
+  LAW_PROPOSED = 'LAW_PROPOSED',
+  PUBLIC_PROJECT_COMPLETED = 'PUBLIC_PROJECT_COMPLETED',
+  ACADEMIC_EXPERIENCE = 'ACADEMIC_EXPERIENCE',
+  PUBLIC_SECTOR_EXPERIENCE = 'PUBLIC_SECTOR_EXPERIENCE',
+  SOCIAL_PROJECT_LEADERSHIP = 'SOCIAL_PROJECT_LEADERSHIP',
+  PROMISE_BROKEN = 'PROMISE_BROKEN',          // AGREGADO
+  FISCAL_DEBT_INCREASE = 'FISCAL_DEBT_INCREASE', // AGREGADO
+  INFRASTRUCTURE_SUCCESS = 'INFRASTRUCTURE_SUCCESS' // AGREGADO
 }
 
 export enum IncidentSeverity {
@@ -31,7 +34,10 @@ export interface Achievement {
   description: string;
   type: AchievementType;
   relevance: number;   // 1=Bajo, 2=Medio, 3=Alto
-  quantity: number;    // Años, proyectos, etc.
+  quantity: number;    
+  impactScore: number; // NUEVO: -1.0 a 1.0 (Crucial para el cálculo)
+  verified: boolean;   // NUEVO
+  sourceUrl?: string;  // NUEVO: Para que el usuario vea la prueba
   tags: string[];
 }
 
