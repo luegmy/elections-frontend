@@ -25,7 +25,6 @@ export class DetalleCandidatoComponent {
     map.set(index, !currentState);
   }
 
-  // Lógica de colores para los Score Cards
   getScoreClass(score: number | undefined | null): string {
     if (score === undefined || score === null) return '';
     if (score >= 80) return 'card-success';
@@ -34,24 +33,13 @@ export class DetalleCandidatoComponent {
     return 'card-danger';
   }
 
-  // Helpers para la sección Judicial
   getSeverityClass(severity: string): string {
-    const classes: any = {
-      'GRAVE': 'b-grave',
-      'MODERADO': 'b-mod',
-      'LEVE': 'b-leve',
-      'NEUTRO': 'b-neu'
-    };
+    const classes: any = { 'GRAVE': 'b-grave', 'MODERADO': 'b-mod', 'LEVE': 'b-leve', 'NEUTRO': 'b-neu' };
     return classes[severity] || 'b-neu';
   }
 
   getSeverityBg(severity: string): string {
-    const classes: any = {
-      'GRAVE': 'bg-grave',
-      'MODERADO': 'bg-mod',
-      'LEVE': 'bg-leve',
-      'NEUTRO': 'bg-neu'
-    };
+    const classes: any = { 'GRAVE': 'bg-grave', 'MODERADO': 'bg-mod', 'LEVE': 'bg-leve', 'NEUTRO': 'bg-neu' };
     return classes[severity] || 'bg-neu';
   }
 

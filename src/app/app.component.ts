@@ -1,35 +1,56 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router, NavigationEnd } from '@angular/router'; // <--- 1. Importar RouterModule
-import { filter } from 'rxjs/operators';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterModule], // <--- 2. DEBE estar aquí
+  imports: [CommonModule, RouterModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  isInicio: boolean = true;
-  isMenuOpen: boolean = false;
+  private router = inject(Router);
 
-  constructor(private router: Router) {
+  // Signals para un manejo de estado más eficiente
+  isMenuOpen = signal(false);
+  showDropdown = signal(false);
+
+  // Convertimos el evento de ruta en un Signal reactivo
+  // Esto detecta automáticamente si estamos en el Home o en una vista de filtros
+  isInicio = toSignal(
     this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      this.isInicio = event.url === '/' || event.urlAfterRedirects === '/';
-    });
+      filter(event => event instanceof NavigationEnd),
+      map(() => {
+        const url = this.router.url;
+        return url === '/' || url.includes('view=all');
+      })
+    ), 
+    { initialValue: true }
+  );
+
+  toggleDropdown(state: boolean) {
+    this.showDropdown.set(state);
   }
 
-  // Cremos esta función para forzar el salto si el routerLink falla
+  toggleMenu() {
+    this.isMenuOpen.update(v => !v);
+  }
+
   irAInicio() {
-    this.isMenuOpen = false;
-    this.router.navigate(['/']).then(() => {
-      // Si ya estás en el inicio, esto limpia todo
-      if (this.router.url === '/') {
-        window.location.href = '/'; 
-      }
+    this.isMenuOpen.set(false);
+    // En lugar de recargar la página, navegamos limpiando parámetros
+    this.router.navigate(['/'], { queryParams: {} });
+  }
+
+  irALista(filtro: string) {
+    this.isMenuOpen.set(false);
+    this.showDropdown.set(false);
+    // Navegación profesional usando queryParams
+    this.router.navigate(['/'], { 
+      queryParams: { view: 'all', filter: filtro } 
     });
   }
 }

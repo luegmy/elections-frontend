@@ -1,47 +1,61 @@
 <div class="app-container">
-  <nav class="navbar">
+  <nav class="navbar" role="navigation">
     <div class="nav-content">
-      <div class="nav-brand">
-        <span class="brand-icon">🗳️</span>
+      <div class="nav-brand" (click)="irAInicio()" style="cursor: pointer;">
+        <span class="brand-icon" aria-hidden="true">🗳️</span>
         <span class="brand-text">SISTEMA ELECTORAL</span>
       </div>
       
-      <div class="nav-links">
-        <button (click)="irAInicio()" class="btn-inicio pc-only">
-          Inicio
-        </button>
+      <div class="nav-links" [class.open]="isMenuOpen()">
+        <button (click)="irAInicio()" class="nav-btn-link">Inicio</button>
         
-        <button class="menu-mobile mobile-only" (click)="irAInicio()">
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-        </button>
+        <div class="dropdown" 
+             (mouseenter)="toggleDropdown(true)" 
+             (mouseleave)="toggleDropdown(false)">
+          <button class="nav-btn-link dropdown-trigger" aria-haspopup="true">
+            Candidatos <span class="arrow">▾</span>
+          </button>
+          
+          <div class="dropdown-menu" [class.show]="showDropdown()">
+            <div class="divider"></div>
+            <button class="dropdown-item" (click)="irALista('Presidente')">
+              👤 Presidencial
+            </button>
+          </div>
+        </div>
       </div>
+
+      <button class="menu-mobile" (click)="toggleMenu()" aria-label="Abrir menú">
+        <div class="bar" [class.cross]="isMenuOpen()"></div>
+        <div class="bar" [class.cross]="isMenuOpen()"></div>
+        <div class="bar" [class.cross]="isMenuOpen()"></div>
+      </button>
     </div>
   </nav>
 
-  <div class="ticker-wrap" *ngIf="isInicio">
-    <div class="ticker">
-      <div class="ticker-item" *ngFor="let i of [1,2]">
-        🔍 <b>FILTRO ELECTORAL:</b> Transformamos registros públicos en un <b>Índice de Riesgo Electoral.</b>
-        No evaluamos discursos, auditamos hechos.
+  @if (isInicio()) {
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <div class="ticker-item" *ngFor="let i of [1,2]">
+          🔍 <b>FILTRO ELECTORAL:</b> Transformamos registros públicos en un <b>Índice de Riesgo Electoral.</b> No evaluamos discursos, auditamos hechos.
+        </div>
       </div>
     </div>
-  </div>
+  }
 
   <main class="main-content">
     <router-outlet></router-outlet>
   </main>
 
- <footer class="app-footer">
-  <div class="footer-levels">
-    <div class="level-item c-verde">● NIVEL 1: LIMPIO</div>
-    <div class="level-item c-amarillo">● NIVEL 2: RECOMENDABLE</div>
-    <div class="level-item c-purpura">● NIVEL 3: OBSERVACIONES</div>
-    <div class="level-item c-rojo">● NIVEL 4: PELIGRO</div>
-  </div>
-  <div class="footer-credits">
-    <p>Desarrollado por: <i>Calibrando Sistemas</i> | Perú - 2026</p>
-  </div>
-</footer>
+  <footer class="app-footer">
+    <div class="footer-levels">
+      <span class="level-item c-verde">● NIVEL 1: APTO</span>
+      <span class="level-item c-amarillo">● NIVEL 2: IDEAL</span>
+      <span class="level-item c-purpura">● NIVEL 3: ALERTA</span>
+      <span class="level-item c-rojo">● NIVEL 4: PELIGRO</span>
+    </div>
+    <p class="footer-credits">
+      Desarrollado por: <strong>Calibrando Sistemas</strong> | Perú - 2026
+    </p>
+  </footer>
 </div>

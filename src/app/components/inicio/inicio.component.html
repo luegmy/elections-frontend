@@ -1,5 +1,6 @@
 <div class="inicio-container">
   <div class="content-area">
+    
     <div *ngIf="!showDetail" class="list-view">
       
       <div class="ayuda-filtro" *ngIf="!loading">
@@ -27,48 +28,110 @@
         </div>
       </div>
 
-      <div *ngIf="!showDetail" class="search-wrap">
+      <div class="search-wrap" *ngIf="!isTableView">
         <div class="peru-frame">
           <div class="watermark-pe">PE</div>
-          <textarea 
-            [(ngModel)]="searchQuery" 
-            (keydown)="onKeyPress($event)" 
-            placeholder="Busca candidatos, antecedentes o propuestas (ej: 'Seguridad', 'Derogacion', 'Lavado')..." 
-            [disabled]="loading" 
-            class="compact-textarea" 
-            rows="3">
-          </textarea>
-          <button 
-            class="btn-search-action" 
-            (click)="onSearch()" 
-            [disabled]="searchQuery.length <= 3 || loading">
+          <textarea [(ngModel)]="searchQuery" 
+                    (keydown)="onKeyPress($event)" 
+                    placeholder="Busca candidatos, antecedentes o propuestas..." 
+                    [disabled]="loading" 
+                    class="compact-textarea" 
+                    rows="3"></textarea>
+          <button class="btn-search-action" (click)="onSearch()" 
+                  [disabled]="searchQuery.length <= 3 || loading">
             <span *ngIf="!loading">ANALIZAR</span>
             <span *ngIf="loading">...</span>
           </button>
         </div>
       </div>
 
-      <div *ngIf="loading" class="state-msg">
+      <div *ngIf="loading && !isTableView" class="state-msg">
         <div class="loader-peru"></div>
         <p>Procesando información electoral...</p>
       </div>
 
       <div *ngIf="error" class="state-msg error">
         <p>⚠️ {{ error }}</p>
-        <button (click)="onSearch()" class="retry-link">Reintentar</button>
+        <button (click)="isTableView ? cargarTabla() : onSearch()" class="retry-link">Reintentar</button>
       </div>
 
-      <app-lista-candidatos *ngIf="searchResults.length > 0 && !loading" [searchResults]="searchResults" (candidateSelected)="onCandidateSelected($event)"></app-lista-candidatos>
+      <div *ngIf="!isTableView">
+        <app-lista-candidatos *ngIf="searchResults.length > 0 && !loading" 
+                              [searchResults]="searchResults" 
+                              (candidateSelected)="onCandidateSelected($event)">
+        </app-lista-candidatos>
 
-      <div *ngIf="searchResults.length === 0 && !loading && hasSearched" class="state-msg no-results">
-        <div class="no-results-icon">📂</div>
-        <p>No se encontraron candidatos con esos criterios.</p>
-        <button (click)="clearSearch()" class="clear-link">Nueva búsqueda</button>
+        <div *ngIf="searchResults.length === 0 && !loading && hasSearched" class="state-msg no-results">
+          <div class="no-results-icon">📂</div>
+          <p>No se encontraron candidatos con esos criterios.</p>
+          <button (click)="clearSearch()" class="clear-link">Nueva búsqueda</button>
+        </div>
+      </div>
+
+      <div *ngIf="isTableView" class="table-master-wrapper" [class.table-loading-state]="loading">
+        <div class="table-card">
+          <div class="table-header-main">
+            <h2 class="table-title">Explorador de Candidatos <small>({{totalCandidatesCount}})</small></h2>
+            <select class="select-dark" [(ngModel)]="pageSize" (change)="onPageSizeChange()">
+              <option [value]="10">10 por página</option>
+              <option [value]="25">25 por página</option>
+              <option [value]="50">50 por página</option>
+            </select>
+          </div>
+
+          <div class="table-responsive">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>CANDIDATO</th>
+                  <th class="desktop-only">PARTIDO POLÍTICO</th>
+                  <th class="text-center">RIESGO</th>
+                  <th class="text-right"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let c of pagedCandidates">
+                  <td>
+                    <div class="user-info">
+                      <div class="avatar-wrapper">
+                        <img *ngIf="c.photo" [src]="c.photo" [alt]="c.name">
+                        <div *ngIf="!c.photo" class="avatar-placeholder">{{ c.name.charAt(0) }}</div>
+                      </div>
+                      <div class="name-block">
+                        <span class="user-name">{{ c.name }}</span>
+                        <div class="mobile-only"><span class="party-name-mobile">{{ c.party }}</span></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="desktop-only"><span class="party-label-desktop">{{ c.party }}</span></td>
+                  <td class="text-center">
+                    <div class="risk-badge" [ngClass]="'lvl-row-' + c.rankingLevel">NIVEL {{ c.rankingLevel }}</div>
+                  </td>
+                  <td class="text-right">
+                    <button class="btn-action-view" (click)="onCandidateSelected(c)">
+                      <span class="desktop-only">VER</span>
+                      <span class="mobile-only">👁</span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pagination-footer">
+            <button class="nav-arrow" (click)="irAPagina(currentPage - 1)" [disabled]="currentPage === 0">‹</button>
+            <div class="num-container">
+              <button *ngFor="let p of paginas" class="num-btn" [class.active]="p === currentPage" (click)="irAPagina(p)">{{ p + 1 }}</button>
+            </div>
+            <button class="nav-arrow" (click)="irAPagina(currentPage + 1)" [disabled]="currentPage + 1 >= totalPages">›</button>
+          </div>
+        </div>
       </div>
     </div>
 
     <div *ngIf="showDetail && selectedCandidate" class="detail-view">
       <app-detalle-candidato [candidate]="selectedCandidate" (backToList)="onBackToList()"></app-detalle-candidato>
     </div>
+
   </div>
 </div>

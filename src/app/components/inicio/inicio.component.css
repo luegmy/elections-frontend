@@ -1,193 +1,249 @@
-/* --- CONTENEDOR GENERAL --- */
-.inicio-container {
-  padding: 1.5rem;
-  font-family: 'Inter', sans-serif;
-  min-height: 80vh;
+/* --- CONTENEDOR PRINCIPAL --- */
+.inicio-container { 
+  padding: 1.5rem; 
+  background: #010409; 
+  min-height: 100vh; 
+  color: #e6edf3; 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
-/* --- CUADRO DE PILARES --- */
-.ayuda-filtro {
-  max-width: 900px;
-  margin: 0 auto 0.8rem;
-  text-align: center;
+.content-area { 
+  max-width: 1200px; 
+  margin: 0 auto; 
 }
 
-.pilares-container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
+/* --- PILARES SUPERIORES --- */
+.pilares-container { 
+  display: grid; 
+  grid-template-columns: repeat(5, 1fr); 
+  gap: 10px; 
+  margin-bottom: 2rem; 
 }
 
-.pilar-col {
-  background: #1c2128;
-  padding: 10px 5px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.pilar-col { 
+  background: #0d1117; 
+  border: 1px solid #30363d; 
+  padding: 12px; 
+  border-radius: 8px; 
+  text-align: center; 
 }
 
-/* Título superior (Escritorio) */
 .pilar-head { 
-  font-size: 0.7rem; 
-  color: #ffffff; 
-  margin-bottom: 4px; 
-  font-weight: 800;
-  text-transform: uppercase;
+  display: block; 
+  font-size: 0.75rem; 
+  font-weight: 800; 
+  color: #fff; 
+  margin-bottom: 4px;
 }
 
-/* DESCRIPCIÓN EN COLOR ORO */
 .pilar-desc { 
-  font-size: 0.62rem; 
-  font-style: italic; 
-  text-align: center;
-  font-weight: 600;
-  /* Efecto Oro Metálico */
-  background: linear-gradient(to bottom, #f9e195 0%, #d4af37 50%, #b8860b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
+  font-size: 0.65rem; 
+  color: #8b949e; 
+  line-height: 1.2;
 }
 
-/* Colores de las negritas dentro del oro */
-.t-judicial b { color: #f85149; -webkit-text-fill-color: #f85149; }
-.t-plan b { color: #3fb950; -webkit-text-fill-color: #3fb950; }
-.t-transparencia b { color: #38bdf8; -webkit-text-fill-color: #38bdf8; }
-.t-confianza b { color: #f0883e; -webkit-text-fill-color: #f0883e; }
-.t-logros b { color: #7dd3fc; -webkit-text-fill-color: #7dd3fc; }
-
-/* --- BUSCADOR --- */
-.search-wrap {
-  max-width: 900px;
-  margin: 0 auto 1.5rem;
+/* --- BUSCADOR TEXTAREA --- */
+.peru-frame { 
+  position: relative; 
+  background: #161b22; 
+  border: 1px solid #30363d; 
+  border-radius: 12px; 
+  display: flex; 
+  min-height: 110px; 
+  margin-bottom: 2rem; 
+  overflow: hidden;
 }
 
-.peru-frame {
-  position: relative;
-  background: #161b22;
-  border-radius: 12px;
-  padding: 2px;
-  background-image: linear-gradient(#161b22, #161b22), 
-                    linear-gradient(to right, #b71c1c 15%, #ffffff 15%, #ffffff 85%, #b71c1c 85%);
-  background-origin: border-box;
-  background-clip: content-box, border-box;
-  display: flex;
-  min-height: 120px;
+.watermark-pe { 
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  font-size: 5rem; 
+  font-weight: 900; 
+  color: rgba(255,255,255,0.02); 
+  pointer-events: none; 
 }
 
-.watermark-pe {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 7.5rem; font-weight: 900;
-  color: rgba(255, 255, 255, 0.03); 
-  pointer-events: none;
-  z-index: 0;
+.compact-textarea { 
+  width: 100%; 
+  background: transparent; 
+  border: none; 
+  color: #e6edf3; 
+  padding: 1.2rem; 
+  font-size: 1.1rem; 
+  outline: none; 
+  resize: none; 
+  z-index: 2; 
 }
 
-.compact-textarea {
-  width: 100%;
-  min-height: 110px;
-  background: transparent;
-  border: none;
-  color: #e6edf3;
-  padding: 1.5rem 120px 1.5rem 1.5rem;
-  font-size: 1.1rem;
-  outline: none;
-  resize: none;
-  z-index: 1;
-  position: relative;
+.btn-search-action { 
+  position: absolute; 
+  right: 15px; 
+  bottom: 15px; 
+  background: #b71c1c; 
+  color: white; 
+  border: none; 
+  padding: 8px 20px; 
+  border-radius: 6px; 
+  font-weight: bold; 
+  cursor: pointer; 
+  z-index: 3; 
 }
 
-.btn-search-action {
-  position: absolute;
-  right: 15px; bottom: 15px;
-  z-index: 10;
-  background: #b71c1c;
-  color: white;
-  border: none;
-  padding: 10px 25px;
-  border-radius: 6px;
-  font-weight: 800;
-  cursor: pointer;
+/* --- TABLA MASTER --- */
+.table-card { 
+  background: #0d1117; 
+  border: 1px solid #30363d; 
+  border-radius: 12px; 
+  overflow: hidden; 
 }
 
-.btn-search-action:disabled {
-  background: #30363d;
-  color: #8b949e;
-  cursor: not-allowed;
-  opacity: 0.6;
+.table-header-main { 
+  padding: 15px 20px; 
+  background: #161b22; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  border-bottom: 1px solid #30363d;
 }
 
-/* --- ESTADOS --- */
-.state-msg {
-  text-align: center;
-  padding: 3rem 1rem;
-  color: #c9d1d9;
+.table-title { font-size: 1.1rem; margin: 0; font-weight: 600; }
+.table-title small { color: #8b949e; font-size: 0.85rem; margin-left: 5px; }
+
+.modern-table { 
+  width: 100%; 
+  border-collapse: collapse; 
 }
 
-.no-results {
-  background: rgba(255,255,255,0.02);
-  border-radius: 12px;
-  border: 1px dashed #30363d;
-  margin-top: 1rem;
-  padding: 20px;
+.modern-table th { 
+  padding: 15px 20px; 
+  background: #161b22; 
+  color: #8b949e; 
+  font-size: 0.7rem; 
+  text-transform: uppercase; 
+  text-align: left; 
 }
 
-.loader-peru {
-  width: 35px; height: 35px;
-  border: 4px solid rgba(255,255,255,0.1);
-  border-top-color: #b71c1c;
-  border-radius: 50%;
-  margin: 0 auto 15px;
-  animation: spin 1s linear infinite;
+.modern-table td { 
+  padding: 15px 20px; 
+  border-bottom: 1px solid #21262d; 
+  vertical-align: middle; 
 }
-@keyframes spin { to { transform: rotate(360deg); } }
 
-/* --- RESPONSIVE MÓVIL (UNA SOLA LÍNEA) --- */
+/* --- ESTILOS DE CELDA --- */
+.user-info { display: flex; align-items: center; gap: 12px; }
+
+.avatar-wrapper { 
+  width: 42px; 
+  height: 42px; 
+  border-radius: 50%; 
+  overflow: hidden; 
+  background: #161b22; 
+  border: 1px solid #30363d; 
+  flex-shrink: 0;
+}
+
+.avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+.name-block { display: flex; flex-direction: column; line-height: 1.3; }
+.user-name { font-weight: 600; color: #58a6ff; font-size: 0.95rem; }
+.party-label-desktop { color: #8b949e; font-size: 0.85rem; }
+
+/* --- RIESGOS DESKTOP --- */
+.risk-badge { 
+  padding: 4px 12px; 
+  border-radius: 15px; 
+  font-size: 0.7rem; 
+  font-weight: bold; 
+  display: inline-block; 
+}
+
+.lvl-row-1 { background: rgba(63, 185, 80, 0.15); color: #3fb950; }
+.lvl-row-2 { background: rgba(210, 153, 34, 0.15); color: #d29922; }
+.lvl-row-3 { background: rgba(163, 113, 247, 0.15); color: #a371f7; }
+.lvl-row-4 { background: rgba(248, 81, 73, 0.15); color: #f85149; }
+
+/* --- BOTÓN VER --- */
+.btn-action-view { 
+  background: #21262d; 
+  border: 1px solid #30363d; 
+  color: #c9d1d9; 
+  padding: 6px 16px; 
+  border-radius: 6px; 
+  cursor: pointer; 
+  font-weight: 600; 
+  transition: 0.2s;
+}
+
+.btn-action-view:hover { background: #30363d; border-color: #8b949e; }
+
+/* --- PAGINACIÓN --- */
+.pagination-footer { 
+  padding: 15px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  gap: 8px; 
+  background: #161b22; 
+}
+
+.num-btn { 
+  background: #0d1117; 
+  border: 1px solid #30363d; 
+  color: #c9d1d9; 
+  width: 36px; 
+  height: 36px; 
+  border-radius: 6px; 
+  cursor: pointer; 
+}
+
+.num-btn.active { background: #b71c1c; color: white; border-color: #f85149; }
+
+/* --- AJUSTES MÓVIL --- */
+.mobile-only { display: none !important; }
+
 @media (max-width: 768px) {
-  .pilares-container {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 0 5px;
-  }
+  .desktop-only { display: none !important; }
+  .mobile-only { display: block !important; }
+  
+  .inicio-container { padding: 10px; }
 
-  .pilar-col {
-    flex-direction: row; /* Alinea título y descripción de lado */
-    justify-content: flex-start;
-    padding: 8px 12px;
-    gap: 8px;
-    white-space: nowrap; /* Impide saltos de línea */
-    overflow: hidden;
-  }
+  /* Pilares en móvil */
+  .pilares-container { grid-template-columns: 1fr; gap: 5px; }
+  .pilar-col { display: flex; justify-content: space-between; align-items: center; padding: 10px; }
 
-  .pilar-head { 
-    font-size: 0.65rem; 
-    margin-bottom: 0;
-    min-width: 75px; /* Mantiene los títulos alineados a la izquierda */
-    text-align: left;
-  }
+  /* Celda nombre y partido */
+  .party-name-mobile { font-size: 0.75rem; color: #8b949e; margin-top: 2px; }
 
-  .pilar-desc { 
-    font-size: 0.65rem; /* No crece la letra */
-    text-align: left;
-    flex: 1;
+  /* Riesgo Cuadrado Centrado */
+  .risk-square { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    width: 55px; 
+    height: 50px; 
+    border-radius: 8px; 
+    margin: 0 auto; 
+    line-height: 1.1;
   }
+  
+  .sq-txt { font-size: 0.55rem; font-weight: bold; }
+  .sq-num { font-size: 1.1rem; font-weight: 900; }
 
-  .peru-frame {
-    flex-direction: column;
-    min-height: auto;
-    padding-bottom: 10px;
-  }
+  /* Colores cuadrados */
+  .lvl-sq-1 { background: #1a3321; color: #3fb950; border: 1px solid #238636; }
+  .lvl-sq-2 { background: #332b1a; color: #d29922; border: 1px solid #9e6a03; }
+  .lvl-sq-3 { background: #2a1a33; color: #a371f7; border: 1px solid #6e40aa; }
+  .lvl-sq-4 { background: #331a1a; color: #f85149; border: 1px solid #da3633; }
 
-  .btn-search-action {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    margin: 0 15px 10px;
-    width: calc(100% - 30px);
+  /* Botón Ver (Ojo Azul) */
+  .btn-action-view { 
+    background: transparent; 
+    border: none; 
+    color: #58a6ff; 
+    font-size: 1.5rem; 
+    padding: 0; 
   }
 }

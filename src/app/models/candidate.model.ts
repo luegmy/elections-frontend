@@ -153,3 +153,21 @@ export interface MatchResponse {
   finalScore: number;
   rankingLevel: number;
 }
+
+export interface CandidateResponse {
+  code: string;
+  name: string;
+  photo: string;
+  party: string;
+  rankingLevel: number;
+}
+
+export interface PageResponse<T> {
+  content: T[];
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number; // Página actual
+  last: boolean;
+  first: boolean;
+}
