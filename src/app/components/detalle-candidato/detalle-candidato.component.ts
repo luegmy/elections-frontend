@@ -19,9 +19,10 @@ export class DetalleCandidatoComponent {
   expandedHistory = new Map<number, boolean>();
   expandedProposals = new Map<number, boolean>();
 
+  // Maneja la apertura de las propuestas
   toggleItem(map: Map<number, boolean>, index: number) {
     const currentState = map.get(index);
-    map.clear(); 
+    map.clear(); // Solo una abierta a la vez
     map.set(index, !currentState);
   }
 
@@ -39,13 +40,13 @@ export class DetalleCandidatoComponent {
   }
 
   getSeverityBg(severity: string): string {
-    const classes: any = { 'GRAVE': 'bg-grave', 'MODERADO': 'bg-mod', 'LEVE': 'bg-leve', 'NEUTRO': 'bg-neu' };
-    return classes[severity] || 'bg-neu';
+    const classes: any = { 'GRAVE': 'bg-red', 'MODERADO': 'bg-orange', 'LEVE': 'bg-yellow', 'NEUTRO': 'bg-gray' };
+    return classes[severity] || 'bg-gray';
   }
 
-  scrollToSection(id: string) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  scrollToSection(sectionId: string) {
+    const el = document.getElementById(sectionId);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   }
 
   goBack() {

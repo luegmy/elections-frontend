@@ -92,10 +92,6 @@
             </span>
             <div class="achievement-info">
               <p class="achievement-desc-text">{{ a.description }}</p>
-              <div class="achievement-meta">
-                <span class="verified-text" *ngIf="a.verified">✔ Verificado</span>
-                <a *ngIf="a.sourceUrl" [href]="a.sourceUrl" target="_blank" class="source-link-mini">Fuente</a>
-              </div>
             </div>
           </div>
         </div>
@@ -192,7 +188,6 @@
     <section class="section-box" id="propuestas">
       <div class="section-header-flex">
         <h2 class="section-title-return" (click)="scrollToSection('anchor-top')">PLAN DE GOBIERNO ▲</h2>
-        <a *ngIf="candidate.governmentPlan?.documentUrl" [href]="candidate.governmentPlan.documentUrl" target="_blank" class="pdf-link-btn">PDF OFICIAL</a>
       </div>
       <div *ngFor="let p of candidate.governmentPlan?.proposals; let i = index" class="proposal-card">
         <div class="proposal-header" (click)="toggleItem(expandedProposals, i)">
