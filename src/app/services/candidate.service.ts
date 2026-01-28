@@ -85,4 +85,10 @@ export class CandidateService {
       catchError(this.handleError)
     );
   }
+
+  checkMyIp(): Observable<string> {
+    return this.http.get(`${this.apiUrl}/registrar-voto`, { responseType: 'text' }).pipe(
+      catchError(this.handleError)
+    );
+  }
 }

@@ -6,6 +6,7 @@ import { CandidateService } from '../../services/candidate.service';
 import { Candidate, MatchResponse, CandidateResponse } from '../../models/candidate.model';
 import { ListaCandidatosComponent } from '../lista-candidatos/lista-candidatos.component';
 import { DetalleCandidatoComponent } from '../detalle-candidato/detalle-candidato.component';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-inicio',
@@ -32,12 +33,17 @@ export class InicioComponent implements OnInit {
   totalCandidatesCount: number = 0;
   currentFilter: string = 'all';
 
+  clientIp = signal<string>('');
+
   constructor(
     private candidateService: CandidateService,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+
+    this.comprobarConexionBackend();
+
     this.route.queryParams.subscribe(params => {
       if (params['view'] === 'all') {
         this.isTableView = true;
@@ -142,5 +148,15 @@ export class InicioComponent implements OnInit {
     this.searchResults = [];
     this.hasSearched = false;
     this.error = '';
+  }
+
+  comprobarConexionBackend() {
+    this.candidateService.checkMyIp().subscribe({
+      next: (ip) => {
+        this.clientIp.set(ip);
+        console.log('IP del dispositivo capturada:', ip);
+      },
+      error: (err) => console.error('Error al obtener IP', err)
+    });
   }
 }
