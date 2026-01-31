@@ -42,8 +42,6 @@ export class InicioComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.comprobarConexionBackend();
-
     this.route.queryParams.subscribe(params => {
       if (params['view'] === 'all') {
         this.isTableView = true;
@@ -148,15 +146,5 @@ export class InicioComponent implements OnInit {
     this.searchResults = [];
     this.hasSearched = false;
     this.error = '';
-  }
-
-  comprobarConexionBackend() {
-    this.candidateService.checkMyIp().subscribe({
-      next: (ip) => {
-        this.clientIp.set(ip);
-        console.log('IP del dispositivo capturada:', ip);
-      },
-      error: (err) => console.error('Error al obtener IP', err)
-    });
   }
 }

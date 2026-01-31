@@ -132,21 +132,6 @@
     <div *ngIf="showDetail && selectedCandidate" class="detail-view">
       <app-detalle-candidato [candidate]="selectedCandidate" (backToList)="onBackToList()"></app-detalle-candidato>
     </div>
-
-     <div class="container">
-  <footer class="mt-5 p-3 text-center border-top">
-    <div class="text-muted small">
-      <p *ngIf="clientIp()">
-        <i class="bi bi-shield-check"></i> 
-        Conexión segura verificada. Su identificador de red es: 
-        <strong>{{ clientIp() }}</strong>
-      </p>
-      <p *ngIf="loading && !clientIp()" class="animate-pulse">
-        Verificando integridad de la conexión...
-      </p>
-    </div>
-  </footer>
-</div>
   </div>
  
 </div>
